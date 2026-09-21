@@ -19,6 +19,7 @@
       --accent-purple: #8b5cf6;
       --accent-cyan: #06b6d4;
       --accent-green: #10b981;
+      --accent-red: #ef4444;
       --text-main: #f4f4f5;
       --text-muted: #a1a1aa;
       --font-sans: 'Inter', sans-serif;
@@ -325,10 +326,6 @@
       color: #f87171;
     }
 
-    .btn-danger:hover {
-      background: rgba(239, 68, 68, 0.3);
-    }
-
     /* HEATMAP GRID */
     .heatmap-container {
       overflow-x: auto;
@@ -381,7 +378,7 @@
       transition: width 0.5s ease;
     }
 
-    /* LOG CONSOLE / NOTIFICATION */
+    /* LOG CONSOLE */
     .log-box {
       background: rgba(0, 0, 0, 0.4);
       border: 1px solid var(--border-color);
@@ -400,7 +397,90 @@
       opacity: 0.9;
     }
 
-    /* CODE & JSON PREVIEW */
+    /* QUIZ & MATH STYLES */
+    .math-lesson-card {
+      margin-bottom: 1.5rem;
+    }
+
+    .quiz-container {
+      margin-top: 1.25rem;
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 1.25rem;
+    }
+
+    .quiz-question {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+
+    .quiz-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .quiz-opt-btn {
+      padding: 0.8rem 1rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-size: 0.9rem;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+
+    .quiz-opt-btn:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: var(--border-bright);
+    }
+
+    .quiz-opt-btn.correct {
+      background: rgba(16, 185, 129, 0.2) !important;
+      border-color: var(--accent-green) !important;
+      color: var(--accent-green) !important;
+      font-weight: 600;
+    }
+
+    .quiz-opt-btn.wrong {
+      background: rgba(239, 68, 68, 0.2) !important;
+      border-color: var(--accent-red) !important;
+      color: var(--accent-red) !important;
+    }
+
+    .ai-feedback-box {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.1));
+      border: 1px solid var(--accent-purple);
+      border-radius: 8px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .ai-feedback-title {
+      font-weight: 700;
+      color: var(--accent-purple);
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .ai-feedback-text {
+      font-size: 0.88rem;
+      line-height: 1.5;
+      color: var(--text-main);
+    }
+
+    /* CODE PREVIEW */
     pre {
       background: rgba(0, 0, 0, 0.5);
       padding: 1rem;
@@ -412,7 +492,6 @@
       overflow-x: auto;
     }
 
-    /* MOBILE RESPONSIVE */
     @media (max-width: 900px) {
       .sidebar { transform: translateX(-100%); }
       .sidebar.open { transform: translateX(0); }
@@ -455,7 +534,7 @@
             <h1 class="banner-title">NEXUS ELITE // Dashboard</h1>
             <p class="banner-subtitle">Целевой факультет: FIIT STU (Slovenská technická univerzita v Bratislave)</p>
           </div>
-          <span class="badge badge-green">STATE ENGINE ONLINE (STEP 2/15)</span>
+          <span class="badge badge-green">MATH ENGINE ONLINE (STEP 3/15)</span>
         </div>
 
         <!-- STATS ROW -->
@@ -491,29 +570,22 @@
           </div>
         </div>
 
-        <!-- STATE ENGINE TEST CONTROLS & POMODORO -->
+        <!-- STATE ENGINE CONTROLS & POMODORO -->
         <div class="grid-2">
-          <!-- STATE ENGINE INTERACTIVE CONTROL -->
           <div class="card">
             <div class="card-header">
-              <span class="card-title">⚡ Тестирование State Engine</span>
-              <span class="badge">Step 2 Test</span>
+              <span class="card-title">⚡ Управление Прогрессом</span>
+              <span class="badge">System Log</span>
             </div>
-            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom: 1rem;">
-              Проверь работу сохранения опыта и прогресса в localStorage:
-            </p>
             <div class="btn-group" style="justify-content: flex-start; margin-bottom: 1rem;">
-              <button class="btn btn-primary" onclick="addXP(50, 'Тестовая награда')">+50 XP</button>
-              <button class="btn btn-primary" onclick="addXP(150, 'Завершение раздела')">+150 XP</button>
-              <button class="btn" onclick="simulateCompletedLesson()">+1 Урок</button>
-              <button class="btn btn-danger" onclick="resetState()">Сброс</button>
+              <button class="btn btn-primary" onclick="addXP(50, 'Бонус за активность')">+50 XP</button>
+              <button class="btn btn-danger" onclick="resetState()">Сбросить прогресс</button>
             </div>
             <div class="log-box" id="system-log">
-              <div class="log-entry">[SYSTEM]: State Engine инициализирован успешно.</div>
+              <div class="log-entry">[SYSTEM]: Платформа NEXUS готова к работе.</div>
             </div>
           </div>
 
-          <!-- POMODORO TIMER -->
           <div class="card">
             <div class="card-header">
               <span class="card-title">⏱️ Pomodoro Focus Timer</span>
@@ -551,7 +623,7 @@
           </div>
         </div>
 
-        <!-- GITHUB-STYLE HEATMAP -->
+        <!-- HEATMAP -->
         <div class="card">
           <div class="card-header">
             <span class="card-title">🟩 Активность обучения (GitHub Style)</span>
@@ -562,15 +634,27 @@
         </div>
       </section>
 
-      <!-- TAB SECTIONS READY FOR STEPS 3-15 -->
-      <section id="math" class="tab-content"><div class="card"><h2>📐 Математика (SCIO & 1 курс)</h2><p style="color:var(--text-muted); margin-top:0.5rem;">Разработка с Шага 3 (Школьная база, тесты и SCIO).</p></div></section>
+      <!-- MATH TAB (STEP 3 FULLY IMPLEMENTED) -->
+      <section id="math" class="tab-content">
+        <div class="banner">
+          <div>
+            <h1 class="banner-title">📐 Школьная Математика & Базис SCIO</h1>
+            <p class="banner-subtitle">Закрываем пробелы в школьной программе и учимся решать задачи без ошибок.</p>
+          </div>
+          <span class="badge badge-green">STEP 3 ACTIVE</span>
+        </div>
+
+        <div id="math-lessons-container">
+          <!-- Dynamically populated math lessons -->
+        </div>
+      </section>
+
+      <!-- TAB SECTIONS FOR STEPS 4-15 -->
       <section id="cyber" class="tab-content"><div class="card"><h2>🛡️ Кибербезопасность & CLI</h2><p style="color:var(--text-muted); margin-top:0.5rem;">Модуль разрабатывается на Шагах 6, 7 и 8.</p></div></section>
       <section id="c-lang" class="tab-content"><div class="card"><h2>💻 Язык C (C Programming)</h2><p style="color:var(--text-muted); margin-top:0.5rem;">Модуль разрабатывается на Шагах 9 и 10.</p></div></section>
       <section id="slovak" class="tab-content"><div class="card"><h2>🇸🇰 Словацкий язык & Голос</h2><p style="color:var(--text-muted); margin-top:0.5rem;">Модуль разрабатывается на Шагах 11 и 12.</p></div></section>
       <section id="ai-tutor" class="tab-content"><div class="card"><h2>🤖 AI-Тьютор (Gemini API)</h2><p style="color:var(--text-muted); margin-top:0.5rem;">Модуль разрабатывается на Шаге 13.</p></div></section>
       <section id="exam" class="tab-content"><div class="card"><h2>🏆 Симулятор Экзамена</h2><p style="color:var(--text-muted); margin-top:0.5rem;">Модуль разрабатывается на Шаге 14.</p></div></section>
-      
-      <!-- SETTINGS TAB (STEP 2 FUNCTIONAL) -->
       <section id="settings" class="tab-content">
         <div class="card">
           <h2>⚙️ Настройки & Данные Сохранения</h2>
@@ -586,7 +670,7 @@
   </div>
 
   <script>
-    // CORE GLOBAL DATABASE & STATE ENGINE
+    // CORE GLOBAL DATABASE ARCHITECTURE
     const STATE_KEY = 'NEXUS_ELITE_STATE_V1';
 
     const DATABASE = {
@@ -601,32 +685,84 @@
         totalQuestionsAnswered: 0,
         correctQuestionsAnswered: 0
       },
-      math: [],
-      cybersecurity: [],
-      cLanguage: [],
-      slovak: []
+      math: [
+        {
+          id: 'math_1',
+          title: '1. Дроби, Степени и Корни (Mocniny a odmocniny)',
+          theory: 'В математических тестах SCIO/OSP ключевую роль играет быстрое упрощение степенных выражений и иррациональных дробей. Помните: a^m * a^n = a^(m+n) и (a^m)^n = a^(m*n).',
+          questions: [
+            {
+              id: 'm1_q1',
+              question: 'Упростите выражение: (2^5 * 4^2) / 8^3',
+              options: ['1', '2', '1/2', '4'],
+              correct: 0,
+              explanation: '2^5 = 32. 4^2 = (2^2)^2 = 2^4 = 16. 8^3 = (2^3)^3 = 2^9 = 512.\nЧислитель: 2^5 * 2^4 = 2^9 = 512.\nРезультат: 512 / 512 = 1.'
+            },
+            {
+              id: 'm1_q2',
+              question: 'Чему равно значение: √18 + √50 - √32 ?',
+              options: ['2√2', '4√2', '3√2', '√2'],
+              correct: 1,
+              explanation: 'Раскладываем подкоренные выражения:\n√18 = √(9*2) = 3√2\n√50 = √(25*2) = 5√2\n√32 = √(16*2) = 4√2\nСкладываем: 3√2 + 5√2 - 4√2 = 4√2.'
+            }
+          ]
+        },
+        {
+          id: 'math_2',
+          title: '2. Квадратные Уравнения и Дискриминант (Kvadratické rovnice)',
+          theory: 'Квадратное уравнение ax^2 + bx + c = 0 имеет корни x = (-b ± √D) / 2a, где дискриминант D = b^2 - 4ac. Если D > 0 — два корня, D = 0 — один корень, D < 0 — корней в R нет.',
+          questions: [
+            {
+              id: 'm2_q1',
+              question: 'Найдите действительные корни уравнения: x^2 - 5x + 6 = 0',
+              options: ['x = 1, x = 6', 'x = 2, x = 3', 'x = -2, x = -3', 'x = -1, x = 5'],
+              correct: 1,
+              explanation: 'Дискриминант D = (-5)^2 - 4*1*6 = 25 - 24 = 1.\nx1 = (5 + 1)/2 = 3\nx2 = (5 - 1)/2 = 2.\nИли по теореме Виета: x1 * x2 = 6 и x1 + x2 = 5 -> корни 2 и 3.'
+            },
+            {
+              id: 'm2_q2',
+              question: 'При каком значении параметра k уравнение x^2 + kx + 9 = 0 имеет ровно один корень?',
+              options: ['k = ±6', 'k = 6', 'k = 3', 'k = ±3'],
+              correct: 0,
+              explanation: 'Уравнение имеет 1 корень при D = 0.\nD = k^2 - 4(1)(9) = k^2 - 36 = 0.\nk^2 = 36  =>  k = ±6.'
+            }
+          ]
+        },
+        {
+          id: 'math_3',
+          title: '3. Функции и Графики Парабол (Funkcie a grafy)',
+          theory: 'Парабола y = ax^2 + bx + c имеет вершину в точке V[x0, y0], где x0 = -b / (2a). Если a > 0, ветви направлены вверх, если a < 0 — вниз.',
+          questions: [
+            {
+              id: 'm3_q1',
+              question: 'Найдите координаты вершины параболы y = x^2 - 4x + 7',
+              options: ['(2, 3)', '(-2, 3)', '(2, 7)', '(4, 7)'],
+              correct: 0,
+              explanation: 'Координата x0 = -(-4) / (2*1) = 4 / 2 = 2.\nКоордината y0 = (2)^2 - 4(2) + 7 = 4 - 8 + 7 = 3.\nВершина параболы находится в точке V[2, 3].'
+            }
+          ]
+        }
+      ]
     };
 
-    // LOGGING SYSTEM
-    function logSystem(message) {
-      const logBox = document.getElementById('system-log');
-      if (!logBox) return;
+    // SYSTEM LOGGING ENGINE
+    function logSystem(msg) {
+      const box = document.getElementById('system-log');
+      if (!box) return;
       const entry = document.createElement('div');
       entry.className = 'log-entry';
-      const time = new Date().toLocaleTimeString();
-      entry.textContent = `[${time}] ${message}`;
-      logBox.appendChild(entry);
-      logBox.scrollTop = logBox.scrollHeight;
+      entry.textContent = `[${new Date().toLocaleTimeString()}] ${msg}`;
+      box.appendChild(entry);
+      box.scrollTop = box.scrollHeight;
     }
 
-    // STATE ENGINE FUNCTIONS
+    // STATE ENGINE LOGIC
     function saveState() {
       try {
         localStorage.setItem(STATE_KEY, JSON.stringify(DATABASE.user));
         updateUI();
-        logSystem('Состояние успешно сохранено в localStorage.');
       } catch (e) {
-        console.error('Ошибка сохранения:', e);
+        console.error('Save error', e);
       }
     }
 
@@ -635,19 +771,15 @@
       if (saved) {
         try {
           DATABASE.user = JSON.parse(saved);
-          checkStreak();
-          logSystem('Данные пользователя загружены из localStorage.');
         } catch (e) {
-          console.error('Ошибка загрузки данных:', e);
+          console.error('Load error', e);
         }
-      } else {
-        saveState();
       }
       updateUI();
     }
 
     function resetState() {
-      if (confirm('Вы уверены, что хотите полностью сбросить весь прогресс?')) {
+      if (confirm('Сбросить весь прогресс?')) {
         localStorage.removeItem(STATE_KEY);
         DATABASE.user = {
           name: "Dani Abdeh",
@@ -661,73 +793,133 @@
           correctQuestionsAnswered: 0
         };
         saveState();
-        logSystem('Сброс состояния выполнен.');
+        renderMathLessons();
+        logSystem('Прогресс сброшен.');
       }
     }
 
-    // STREAK CALCULATOR ENGINE
-    function checkStreak() {
-      const today = new Date().toISOString().slice(0, 10);
-      const last = DATABASE.user.lastActiveDate;
-
-      if (last !== today) {
-        const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
-        if (last === yesterday) {
-          DATABASE.user.streak += 1;
-        } else {
-          DATABASE.user.streak = 1;
-        }
-        DATABASE.user.lastActiveDate = today;
-        saveState();
-      }
-    }
-
-    // XP & LEVEL ENGINE
     function addXP(amount, reason = '') {
       DATABASE.user.xp += amount;
-      
-      // Calculate level based on XP formula: Level = floor(XP / 200) + 1
       const newLevel = Math.floor(DATABASE.user.xp / 200) + 1;
       if (newLevel > DATABASE.user.level) {
         DATABASE.user.level = newLevel;
-        logSystem(`🎉 ПОЗДРАВЛЯЕМ! Достигнут Level ${newLevel}!`);
-        alert(`🎉 ПОЗДРАВЛЯЕМ! Вы достигли Level ${newLevel}!`);
+        alert(`🎉 Новое достижение! Вы достигли Level ${newLevel}!`);
       }
-
-      if (reason) {
-        logSystem(`Получено +${amount} XP (${reason}).`);
-      }
+      if (reason) logSystem(`+${amount} XP (${reason})`);
       saveState();
     }
 
-    function simulateCompletedLesson() {
-      const lessonId = `lesson_${Date.now()}`;
-      DATABASE.user.completedLessons.push(lessonId);
-      addXP(100, 'Завершение урока');
-    }
-
-    // UI UPDATER ENGINE
+    // UI UPDATER
     function updateUI() {
       const u = DATABASE.user;
 
-      // Stats Cards
       document.getElementById('stat-xp').textContent = u.xp;
       document.getElementById('stat-lessons').textContent = u.completedLessons.length;
       document.getElementById('stat-accuracy').textContent = u.accuracy + '%';
       document.getElementById('stat-streak').textContent = `🔥 ${u.streak}`;
       document.getElementById('level-badge').textContent = `Level ${u.level}`;
 
-      // Level Progress Bar
-      const currentLevelXP = u.xp % 200;
-      const fillPercentage = Math.min((currentLevelXP / 200) * 100, 100);
-      document.getElementById('level-progress-text').textContent = `${currentLevelXP} / 200 XP`;
-      document.getElementById('level-bar-fill').style.width = `${fillPercentage}%`;
+      const currentXP = u.xp % 200;
+      document.getElementById('level-progress-text').textContent = `${currentXP} / 200 XP`;
+      document.getElementById('level-bar-fill').style.width = `${(currentXP / 200) * 100}%`;
 
-      // JSON Preview in Settings
+      // Math Subject Progress Calculation
+      const totalMathLessons = DATABASE.math.length;
+      const completedMath = DATABASE.math.filter(l => u.completedLessons.includes(l.id)).length;
+      const mathPercent = totalMathLessons > 0 ? Math.round((completedMath / totalMathLessons) * 100) : 0;
+      
+      document.getElementById('prog-math-text').textContent = `${mathPercent}%`;
+      document.getElementById('prog-math-bar').style.width = `${mathPercent}%`;
+
       const jsonPre = document.getElementById('json-preview');
-      if (jsonPre) {
-        jsonPre.textContent = JSON.stringify(u, null, 2);
+      if (jsonPre) jsonPre.textContent = JSON.stringify(u, null, 2);
+    }
+
+    // RENDER MATH LESSONS & QUIZZES
+    function renderMathLessons() {
+      const container = document.getElementById('math-lessons-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      DATABASE.math.forEach((lesson, lIdx) => {
+        const isCompleted = DATABASE.user.completedLessons.includes(lesson.id);
+        const card = document.createElement('div');
+        card.className = 'card math-lesson-card';
+
+        let quizHTML = '';
+        lesson.questions.forEach((q, qIdx) => {
+          quizHTML += `
+            <div class="quiz-container" id="quiz-${lIdx}-${qIdx}">
+              <div class="quiz-question">${qIdx + 1}. ${q.question}</div>
+              <div class="quiz-options">
+                ${q.options.map((opt, oIdx) => `
+                  <button class="quiz-opt-btn" onclick="checkAnswer(${lIdx}, ${qIdx},${oIdx})">
+                    ${String.fromCharCode(65 + oIdx)})${opt}
+                  </button>
+                `).join('')}
+              </div>
+              <div class="ai-feedback-box" id="feedback-${lIdx}-${qIdx}">
+                <div class="ai-feedback-title">🤖 AI Tutor Explanation</div>
+                <div class="ai-feedback-text">${q.explanation.replace(/\n/g, '<br>')}</div>
+              </div>
+            </div>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="card-header">
+            <h3>${lesson.title}</h3>
+            ${isCompleted ? '<span class="badge badge-green">✓ Пройдено</span>' : '<span class="badge">В процессе</span>'}
+          </div>
+          <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1rem; line-height:1.5;">${lesson.theory}</p>
+          ${quizHTML}
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    // CHECK QUIZ ANSWER LOGIC
+    function checkAnswer(lIdx, qIdx, selectedOpt) {
+      const question = DATABASE.math[lIdx].questions[qIdx];
+      const quizBox = document.getElementById(`quiz-${lIdx}-${qIdx}`);
+      const feedbackBox = document.getElementById(`feedback-${lIdx}-${qIdx}`);
+      const buttons = quizBox.querySelectorAll('.quiz-opt-btn');
+
+      // Update global accuracy stats
+      DATABASE.user.totalQuestionsAnswered += 1;
+
+      if (selectedOpt === question.correct) {
+        DATABASE.user.correctQuestionsAnswered += 1;
+        buttons[selectedOpt].classList.add('correct');
+        buttons.forEach(btn => btn.style.pointerEvents = 'none');
+        
+        // Hide feedback if correct
+        feedbackBox.style.display = 'none';
+
+        // Add XP
+        addXP(25, `Верный ответ: Задача ${qIdx + 1}`);
+
+        // Mark lesson completed if not marked
+        const lessonId = DATABASE.math[lIdx].id;
+        if (!DATABASE.user.completedLessons.includes(lessonId)) {
+          DATABASE.user.completedLessons.push(lessonId);
+          logSystem(`Урок "${DATABASE.math[lIdx].title}" завершен!`);
+        }
+      } else {
+        buttons[selectedOpt].classList.add('wrong');
+        buttons[question.correct].classList.add('correct');
+        buttons.forEach(btn => btn.style.pointerEvents = 'none');
+
+        // Show AI Tutor feedback
+        feedbackBox.style.display = 'block';
+        logSystem(`Ошибка в задаче ${qIdx + 1}. Показан разбор ИИ.`);
       }
+
+      // Recalculate accuracy %
+      DATABASE.user.accuracy = Math.round((DATABASE.user.correctQuestionsAnswered / DATABASE.user.totalQuestionsAnswered) * 100);
+      saveState();
+      renderMathLessons();
     }
 
     // SPA TAB ROUTER
@@ -797,6 +989,7 @@
     window.addEventListener('DOMContentLoaded', () => {
       renderHeatmap();
       loadState();
+      renderMathLessons();
     });
   </script>
 </body>
