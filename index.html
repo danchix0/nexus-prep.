@@ -198,6 +198,18 @@
       border-color: var(--accent-green);
     }
 
+    .badge-purple {
+      background: rgba(139, 92, 246, 0.2);
+      color: var(--accent-purple);
+      border-color: var(--accent-purple);
+    }
+
+    .badge-cyan {
+      background: rgba(6, 182, 212, 0.2);
+      color: var(--accent-cyan);
+      border-color: var(--accent-cyan);
+    }
+
     /* GRID LAYOUTS */
     .grid-4 {
       display: grid;
@@ -326,6 +338,37 @@
       color: #f87171;
     }
 
+    /* FILTER TABS */
+    .filter-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      color: var(--text-main);
+      border-color: var(--border-bright);
+    }
+
+    .filter-btn.active {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+      color: #fff;
+      font-weight: 600;
+    }
+
     /* HEATMAP GRID */
     .heatmap-container {
       overflow-x: auto;
@@ -400,6 +443,45 @@
     /* QUIZ & MATH STYLES */
     .math-lesson-card {
       margin-bottom: 1.5rem;
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+      height: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      margin: 1rem 0;
+      background: #000;
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .notes-box {
+      width: 100%;
+      min-height: 80px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-main);
+      padding: 0.75rem;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      resize: vertical;
+    }
+
+    .notes-box:focus {
+      outline: none;
+      border-color: var(--accent-blue);
     }
 
     .quiz-container {
@@ -511,7 +593,7 @@
         </div>
         <ul class="nav-list">
           <li class="nav-item active"><button onclick="switchTab('dashboard')">📊 Дашборд</button></li>
-          <li class="nav-item"><button onclick="switchTab('math')">📐 Математика</button></li>
+          <li class="nav-item"><button onclick="switchTab('math')">📐 Математика & SCIO</button></li>
           <li class="nav-item"><button onclick="switchTab('cyber')">🛡️ Кибербез & CLI</button></li>
           <li class="nav-item"><button onclick="switchTab('c-lang')">💻 Язык C</button></li>
           <li class="nav-item"><button onclick="switchTab('slovak')">🇸🇰 Словацкий & Голос</button></li>
@@ -534,7 +616,7 @@
             <h1 class="banner-title">NEXUS ELITE // Dashboard</h1>
             <p class="banner-subtitle">Целевой факультет: FIIT STU (Slovenská technická univerzita v Bratislave)</p>
           </div>
-          <span class="badge badge-green">MATH ENGINE ONLINE (STEP 3/15)</span>
+          <span class="badge badge-green">HIGHER MATH ONLINE (STEP 5/15)</span>
         </div>
 
         <!-- STATS ROW -->
@@ -606,7 +688,7 @@
             <span class="card-title">📈 Прогресс по предметам</span>
           </div>
           <div class="progress-item">
-            <div class="progress-label"><span>Математика & SCIO</span><span id="prog-math-text">0%</span></div>
+            <div class="progress-label"><span>Математика & SCIO & Higher</span><span id="prog-math-text">0%</span></div>
             <div class="progress-bar"><div class="progress-fill" id="prog-math-bar"></div></div>
           </div>
           <div class="progress-item">
@@ -634,22 +716,30 @@
         </div>
       </section>
 
-      <!-- MATH TAB (STEP 3 FULLY IMPLEMENTED) -->
+      <!-- MATH TAB (STEPS 3, 4 & 5 COMPLETE) -->
       <section id="math" class="tab-content">
         <div class="banner">
           <div>
-            <h1 class="banner-title">📐 Школьная Математика & Базис SCIO</h1>
-            <p class="banner-subtitle">Закрываем пробелы в школьной программе и учимся решать задачи без ошибок.</p>
+            <h1 class="banner-title">📐 Математика: Школа, SCIO & 1 курс FIIT</h1>
+            <p class="banner-subtitle">Полный цикл: от базовых уравнений до Высшей математики, матриц и пределов.</p>
           </div>
-          <span class="badge badge-green">STEP 3 ACTIVE</span>
+          <span class="badge badge-cyan">STEP 5 ACTIVE</span>
+        </div>
+
+        <!-- FILTER BUTTONS -->
+        <div class="filter-bar">
+          <button class="filter-btn active" onclick="filterMath('all', this)">Все темы</button>
+          <button class="filter-btn" onclick="filterMath('school', this)">Школьный базис</button>
+          <button class="filter-btn" onclick="filterMath('scio', this)">SCIO / OSP Экзамен</button>
+          <button class="filter-btn" onclick="filterMath('higher', this)">Высшая математика (1 курс)</button>
         </div>
 
         <div id="math-lessons-container">
-          <!-- Dynamically populated math lessons -->
+          <!-- Dynamically populated math, SCIO & higher lessons -->
         </div>
       </section>
 
-      <!-- TAB SECTIONS FOR STEPS 4-15 -->
+      <!-- TAB SECTIONS FOR STEPS 6-15 -->
       <section id="cyber" class="tab-content"><div class="card"><h2>🛡️ Кибербезопасность & CLI</h2><p style="color:var(--text-muted); margin-top:0.5rem;">Модуль разрабатывается на Шагах 6, 7 и 8.</p></div></section>
       <section id="c-lang" class="tab-content"><div class="card"><h2>💻 Язык C (C Programming)</h2><p style="color:var(--text-muted); margin-top:0.5rem;">Модуль разрабатывается на Шагах 9 и 10.</p></div></section>
       <section id="slovak" class="tab-content"><div class="card"><h2>🇸🇰 Словацкий язык & Голос</h2><p style="color:var(--text-muted); margin-top:0.5rem;">Модуль разрабатывается на Шагах 11 и 12.</p></div></section>
@@ -683,11 +773,14 @@
         completedLessons: [],
         accuracy: 100,
         totalQuestionsAnswered: 0,
-        correctQuestionsAnswered: 0
+        correctQuestionsAnswered: 0,
+        notes: {}
       },
       math: [
+        // SCHOOL BASE (STEP 3)
         {
           id: 'math_1',
+          category: 'school',
           title: '1. Дроби, Степени и Корни (Mocniny a odmocniny)',
           theory: 'В математических тестах SCIO/OSP ключевую роль играет быстрое упрощение степенных выражений и иррациональных дробей. Помните: a^m * a^n = a^(m+n) и (a^m)^n = a^(m*n).',
           questions: [
@@ -709,6 +802,7 @@
         },
         {
           id: 'math_2',
+          category: 'school',
           title: '2. Квадратные Уравнения и Дискриминант (Kvadratické rovnice)',
           theory: 'Квадратное уравнение ax^2 + bx + c = 0 имеет корни x = (-b ± √D) / 2a, где дискриминант D = b^2 - 4ac. Если D > 0 — два корня, D = 0 — один корень, D < 0 — корней в R нет.',
           questions: [
@@ -718,32 +812,91 @@
               options: ['x = 1, x = 6', 'x = 2, x = 3', 'x = -2, x = -3', 'x = -1, x = 5'],
               correct: 1,
               explanation: 'Дискриминант D = (-5)^2 - 4*1*6 = 25 - 24 = 1.\nx1 = (5 + 1)/2 = 3\nx2 = (5 - 1)/2 = 2.\nИли по теореме Виета: x1 * x2 = 6 и x1 + x2 = 5 -> корни 2 и 3.'
-            },
+            }
+          ]
+        },
+
+        // SCIO / OSP MODULES (STEP 4)
+        {
+          id: 'math_scio_1',
+          category: 'scio',
+          title: '3. Формальная Логика и Высказывания (Výroková logika)',
+          theory: 'В тестах SCIO OSP вам нужно уметь строить отрицания высказываний и определять истинность импликации (A => B). Импликация ЛОЖНА только в одном случае: когда A истинно (1), а B ложно (0).',
+          questions: [
             {
-              id: 'm2_q2',
-              question: 'При каком значении параметра k уравнение x^2 + kx + 9 = 0 имеет ровно один корень?',
-              options: ['k = ±6', 'k = 6', 'k = 3', 'k = ±3'],
-              correct: 0,
-              explanation: 'Уравнение имеет 1 корень при D = 0.\nD = k^2 - 4(1)(9) = k^2 - 36 = 0.\nk^2 = 36  =>  k = ±6.'
+              id: 'ms1_q1',
+              question: 'Каково строгое логическое отрицание утверждения: "Если студент сдает экзамен, то он получает стипендию"?',
+              options: [
+                'Студент не сдает экзамен и не получает стипендию.',
+                'Студент сдает экзамен, но не получает стипендию.',
+                'Если студент не сдает экзамен, то не получает стипендию.',
+                'Студент не сдает экзамен или получает стипендию.'
+              ],
+              correct: 1,
+              explanation: 'Формула отрицания импликации: NOT(A => B) ≡ A ∧ NOT(B).\nГде A: "Студент сдает экзамен", B: "Студент получает стипендию".\nСледовательно, отрицание: "Студент сдает экзамен И НЕ получает стипендию".'
             }
           ]
         },
         {
-          id: 'math_3',
-          title: '3. Функции и Графики Парабол (Funkcie a grafy)',
-          theory: 'Парабола y = ax^2 + bx + c имеет вершину в точке V[x0, y0], где x0 = -b / (2a). Если a > 0, ветви направлены вверх, если a < 0 — вниз.',
+          id: 'math_scio_2',
+          category: 'scio',
+          title: '4. Теория Множеств и Диаграммы Венна (Množinové diagramy)',
+          theory: 'Множества — одна из главных тем SCIO OSP. Формула включений и исключений для двух множеств: |A ∪ B| = |A| + |B| - |A ∩ B|.',
           questions: [
             {
-              id: 'm3_q1',
-              question: 'Найдите координаты вершины параболы y = x^2 - 4x + 7',
-              options: ['(2, 3)', '(-2, 3)', '(2, 7)', '(4, 7)'],
+              id: 'ms2_q1',
+              question: 'В группе из 30 абитуриентов FIIT 18 программируют на C, 15 знают Python, а 5 не знают ни одного из этих языков. Сколько абитуриентов знают ОБА языка?',
+              options: ['5', '8', '10', '12'],
+              correct: 1,
+              explanation: 'Всего абитуриентов, знающих хотя бы один язык: 30 - 5 = 25.\nПрименяем формулу |A ∪ B| = |A| + |B| - |A ∩ B|:\n25 = 18 + 15 - |A ∩ B| => 25 = 33 - |A ∩ B| => |A ∩ B| = 8.'
+            }
+          ]
+        },
+
+        // HIGHER MATH FIIT STU (STEP 5)
+        {
+          id: 'math_higher_1',
+          category: 'higher',
+          title: '5. Пределы и Производные (Limity a derivácie)',
+          youtubeId: 'rAof9Ld5sOg',
+          theory: 'Предел функции lim (x->a) f(x) описывает поведение функции вблизи точки a. Производная f\'(x) задает скорость изменения функции и угол наклона касательной.',
+          questions: [
+            {
+              id: 'mh1_q1',
+              question: 'Чему равен предел: lim (x -> 0) (sin(x) / x) ?',
+              options: ['0', '1', 'Бесконечность', 'Не существует'],
+              correct: 1,
+              explanation: 'Замечательный предел: lim (x->0) sin(x)/x = 1. Это фундаментальная теорема высшей математики 1 курса.'
+            },
+            {
+              id: 'mh1_q2',
+              question: 'Найдите производную функции f(x) = 3x^2 + 5x - 4 в точке x = 2.',
+              options: ['12', '17', '11', '6'],
+              correct: 1,
+              explanation: 'Производная f\'(x) = d/dx (3x^2 + 5x - 4) = 6x + 5.\nПодставляем x = 2: f\'(2) = 6(2) + 5 = 12 + 5 = 17.'
+            }
+          ]
+        },
+        {
+          id: 'math_higher_2',
+          category: 'higher',
+          title: '6. Линейная Алгебра: Матрицы и Определители (Matice)',
+          youtubeId: 'fNk_zzaMoSs',
+          theory: 'Матрицы используются в компьютерной графике, машиностроении и криптографии. Определитель (детерминант) матрицы 2x2: det([a b; c d]) = ad - bc.',
+          questions: [
+            {
+              id: 'mh2_q1',
+              question: 'Вычислите определитель матрицы A = [[4, 2], [3, 5]]',
+              options: ['14', '20', '26', '12'],
               correct: 0,
-              explanation: 'Координата x0 = -(-4) / (2*1) = 4 / 2 = 2.\nКоордината y0 = (2)^2 - 4(2) + 7 = 4 - 8 + 7 = 3.\nВершина параболы находится в точке V[2, 3].'
+              explanation: 'det(A) = (4 * 5) - (2 * 3) = 20 - 6 = 14.'
             }
           ]
         }
       ]
     };
+
+    let currentMathFilter = 'all';
 
     // SYSTEM LOGGING ENGINE
     function logSystem(msg) {
@@ -770,7 +923,8 @@
       const saved = localStorage.getItem(STATE_KEY);
       if (saved) {
         try {
-          DATABASE.user = JSON.parse(saved);
+          const parsed = JSON.parse(saved);
+          DATABASE.user = { ...DATABASE.user, ...parsed };
         } catch (e) {
           console.error('Load error', e);
         }
@@ -790,7 +944,8 @@
           completedLessons: [],
           accuracy: 100,
           totalQuestionsAnswered: 0,
-          correctQuestionsAnswered: 0
+          correctQuestionsAnswered: 0,
+          notes: {}
         };
         saveState();
         renderMathLessons();
@@ -806,6 +961,12 @@
         alert(`🎉 Новое достижение! Вы достигли Level ${newLevel}!`);
       }
       if (reason) logSystem(`+${amount} XP (${reason})`);
+      saveState();
+    }
+
+    function saveNote(lessonId, text) {
+      if (!DATABASE.user.notes) DATABASE.user.notes = {};
+      DATABASE.user.notes[lessonId] = text;
       saveState();
     }
 
@@ -835,30 +996,60 @@
       if (jsonPre) jsonPre.textContent = JSON.stringify(u, null, 2);
     }
 
-    // RENDER MATH LESSONS & QUIZZES
+    // FILTER MATH LESSONS
+    function filterMath(category, btnElement) {
+      currentMathFilter = category;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btnElement.classList.add('active');
+      renderMathLessons();
+    }
+
+    // RENDER MATH LESSONS (ALL CATEGORIES + VIDEO & NOTES)
     function renderMathLessons() {
       const container = document.getElementById('math-lessons-container');
       if (!container) return;
       container.innerHTML = '';
 
-      DATABASE.math.forEach((lesson, lIdx) => {
+      const filtered = DATABASE.math.filter(l => currentMathFilter === 'all' || l.category === currentMathFilter);
+
+      filtered.forEach((lesson, lIdx) => {
         const isCompleted = DATABASE.user.completedLessons.includes(lesson.id);
         const card = document.createElement('div');
         card.className = 'card math-lesson-card';
 
+        // Video Player HTML if available
+        let videoHTML = '';
+        if (lesson.youtubeId) {
+          videoHTML = `
+            <div class="video-container">
+              <iframe src="https://www.youtube.com/embed/${lesson.youtubeId}" allowfullscreen></iframe>
+            </div>
+          `;
+        }
+
+        // Notes HTML
+        const existingNote = (DATABASE.user.notes && DATABASE.user.notes[lesson.id]) || '';
+        let notesHTML = `
+          <div style="margin-top:1rem;">
+            <label style="font-size:0.8rem; color:var(--text-muted);">📝 Записник конспекта по лекции (автосохранение):</label>
+            <textarea class="notes-box" placeholder="Запишите сюда формулы или заметки..." oninput="saveNote('${lesson.id}', this.value)">${existingNote}</textarea>
+          </div>
+        `;
+
+        // Quiz HTML
         let quizHTML = '';
         lesson.questions.forEach((q, qIdx) => {
           quizHTML += `
-            <div class="quiz-container" id="quiz-${lIdx}-${qIdx}">
+            <div class="quiz-container" id="quiz-${lesson.id}-${qIdx}">
               <div class="quiz-question">${qIdx + 1}. ${q.question}</div>
               <div class="quiz-options">
                 ${q.options.map((opt, oIdx) => `
-                  <button class="quiz-opt-btn" onclick="checkAnswer(${lIdx}, ${qIdx},${oIdx})">
+                  <button class="quiz-opt-btn" onclick="checkAnswer('${lesson.id}', ${qIdx},${oIdx})">
                     ${String.fromCharCode(65 + oIdx)})${opt}
                   </button>
                 `).join('')}
               </div>
-              <div class="ai-feedback-box" id="feedback-${lIdx}-${qIdx}">
+              <div class="ai-feedback-box" id="feedback-${lesson.id}-${qIdx}">
                 <div class="ai-feedback-title">🤖 AI Tutor Explanation</div>
                 <div class="ai-feedback-text">${q.explanation.replace(/\n/g, '<br>')}</div>
               </div>
@@ -866,12 +1057,27 @@
           `;
         });
 
+        let badgeClass = 'badge-green';
+        let categoryLabel = 'Школьный базис';
+        if (lesson.category === 'scio') {
+          badgeClass = 'badge-purple';
+          categoryLabel = 'SCIO / OSP';
+        } else if (lesson.category === 'higher') {
+          badgeClass = 'badge-cyan';
+          categoryLabel = 'Высшая математика 1 курс';
+        }
+
         card.innerHTML = `
           <div class="card-header">
-            <h3>${lesson.title}</h3>
+            <div>
+              <span class="badge ${badgeClass}" style="margin-right:0.5rem;">${categoryLabel}</span>
+              <h3 style="display:inline;">${lesson.title}</h3>
+            </div>
             ${isCompleted ? '<span class="badge badge-green">✓ Пройдено</span>' : '<span class="badge">В процессе</span>'}
           </div>
           <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1rem; line-height:1.5;">${lesson.theory}</p>
+          ${videoHTML}
+          ${notesHTML}
           ${quizHTML}
         `;
 
@@ -880,13 +1086,13 @@
     }
 
     // CHECK QUIZ ANSWER LOGIC
-    function checkAnswer(lIdx, qIdx, selectedOpt) {
-      const question = DATABASE.math[lIdx].questions[qIdx];
-      const quizBox = document.getElementById(`quiz-${lIdx}-${qIdx}`);
-      const feedbackBox = document.getElementById(`feedback-${lIdx}-${qIdx}`);
+    function checkAnswer(lessonId, qIdx, selectedOpt) {
+      const lesson = DATABASE.math.find(l => l.id === lessonId);
+      const question = lesson.questions[qIdx];
+      const quizBox = document.getElementById(`quiz-${lessonId}-${qIdx}`);
+      const feedbackBox = document.getElementById(`feedback-${lessonId}-${qIdx}`);
       const buttons = quizBox.querySelectorAll('.quiz-opt-btn');
 
-      // Update global accuracy stats
       DATABASE.user.totalQuestionsAnswered += 1;
 
       if (selectedOpt === question.correct) {
@@ -894,29 +1100,22 @@
         buttons[selectedOpt].classList.add('correct');
         buttons.forEach(btn => btn.style.pointerEvents = 'none');
         
-        // Hide feedback if correct
         feedbackBox.style.display = 'none';
+        addXP(25, `Верный ответ в теме: ${lesson.title}`);
 
-        // Add XP
-        addXP(25, `Верный ответ: Задача ${qIdx + 1}`);
-
-        // Mark lesson completed if not marked
-        const lessonId = DATABASE.math[lIdx].id;
         if (!DATABASE.user.completedLessons.includes(lessonId)) {
           DATABASE.user.completedLessons.push(lessonId);
-          logSystem(`Урок "${DATABASE.math[lIdx].title}" завершен!`);
+          logSystem(`Урок "${lesson.title}" успешно пройден!`);
         }
       } else {
         buttons[selectedOpt].classList.add('wrong');
         buttons[question.correct].classList.add('correct');
         buttons.forEach(btn => btn.style.pointerEvents = 'none');
 
-        // Show AI Tutor feedback
         feedbackBox.style.display = 'block';
-        logSystem(`Ошибка в задаче ${qIdx + 1}. Показан разбор ИИ.`);
+        logSystem(`Ошибка в задаче. Разбор ИИ активирован.`);
       }
 
-      // Recalculate accuracy %
       DATABASE.user.accuracy = Math.round((DATABASE.user.correctQuestionsAnswered / DATABASE.user.totalQuestionsAnswered) * 100);
       saveState();
       renderMathLessons();
