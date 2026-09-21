@@ -4,9 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NEXUS Elite // FIIT STU Prep Platform</title>
+  
+  <!-- FONTS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <!-- KATEX MATH ENGINE (Для отображения настоящих дробей, корней и матриц) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
   <style>
     /* CSS RESET & THEME VARIABLES */
     :root {
@@ -27,11 +35,7 @@
       --font-mono: 'JetBrains Mono', monospace;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       background-color: var(--bg-primary);
@@ -42,12 +46,7 @@
       overflow-x: hidden;
     }
 
-    /* LAYOUT STRUCTURE */
-    .app-container {
-      display: flex;
-      width: 100vw;
-      min-height: 100vh;
-    }
+    .app-container { display: flex; width: 100vw; min-height: 100vh; }
 
     /* SIDEBAR NAVIGATION */
     .sidebar {
@@ -59,9 +58,7 @@
       justify-content: space-between;
       padding: 1.5rem 1rem;
       position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
+      top: 0; bottom: 0; left: 0;
       z-index: 100;
       transition: transform 0.3s ease;
     }
@@ -75,83 +72,49 @@
     }
 
     .logo-icon {
-      width: 38px;
-      height: 38px;
+      width: 38px; height: 38px;
       background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
       border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-family: var(--font-mono);
-      color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-family: var(--font-mono); color: #fff;
       box-shadow: 0 0 18px rgba(59, 130, 246, 0.4);
     }
 
     .logo-text {
-      font-weight: 700;
-      font-size: 1.15rem;
-      letter-spacing: -0.5px;
+      font-weight: 700; font-size: 1.15rem; letter-spacing: -0.5px;
       background: linear-gradient(to right, #ffffff, #a1a1aa);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
 
-    .nav-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-      margin-top: 1.5rem;
-    }
+    .nav-list { list-style: none; display: flex; flex-direction: column; gap: 0.35rem; margin-top: 1.5rem; }
 
     .nav-item button {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-      padding: 0.75rem 1rem;
-      background: transparent;
-      border: 1px solid transparent;
-      border-radius: 8px;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-align: left;
+      width: 100%; display: flex; align-items: center; gap: 0.85rem;
+      padding: 0.75rem 1rem; background: transparent;
+      border: 1px solid transparent; border-radius: 8px;
+      color: var(--text-muted); font-size: 0.9rem; font-weight: 500;
+      cursor: pointer; transition: all 0.2s ease; text-align: left;
     }
 
     .nav-item button:hover {
       background: rgba(255, 255, 255, 0.04);
-      color: var(--text-main);
-      border-color: var(--border-color);
+      color: var(--text-main); border-color: var(--border-color);
     }
 
     .nav-item.active button {
       background: linear-gradient(90deg, rgba(59, 130, 246, 0.15), rgba(139, 92, 246, 0.05));
-      color: #ffffff;
-      border-color: rgba(59, 130, 246, 0.4);
+      color: #ffffff; border-color: rgba(59, 130, 246, 0.4);
       box-shadow: 0 0 12px rgba(59, 130, 246, 0.15);
     }
 
     /* MAIN CONTENT VIEW */
     .main-content {
-      margin-left: 260px;
-      flex: 1;
-      padding: 2rem;
-      min-height: 100vh;
-      width: calc(100% - 260px);
+      margin-left: 260px; flex: 1; padding: 2rem;
+      min-height: 100vh; width: calc(100% - 260px);
     }
 
-    .tab-content {
-      display: none;
-      animation: fadeIn 0.3s ease-in-out forwards;
-    }
-
-    .tab-content.active {
-      display: block;
-    }
+    .tab-content { display: none; animation: fadeIn 0.3s ease-in-out forwards; }
+    .tab-content.active { display: block; }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(6px); }
@@ -162,416 +125,125 @@
     .banner {
       background: linear-gradient(135deg, rgba(59, 130, 246, 0.12), rgba(139, 92, 246, 0.12));
       border: 1px solid rgba(59, 130, 246, 0.3);
-      border-radius: 12px;
-      padding: 1.5rem 2rem;
-      margin-bottom: 2rem;
+      border-radius: 12px; padding: 1.5rem 2rem; margin-bottom: 2rem;
       backdrop-filter: blur(10px);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display: flex; justify-content: space-between; align-items: center;
     }
 
-    .banner-title {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 0.25rem;
-    }
-
-    .banner-subtitle {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
+    .banner-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .banner-subtitle { color: var(--text-muted); font-size: 0.9rem; }
 
     .badge {
-      background: rgba(59, 130, 246, 0.2);
-      color: var(--accent-blue);
-      border: 1px solid var(--accent-blue);
-      padding: 0.25rem 0.75rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-family: var(--font-mono);
-      font-weight: 600;
+      background: rgba(59, 130, 246, 0.2); color: var(--accent-blue);
+      border: 1px solid var(--accent-blue); padding: 0.25rem 0.75rem;
+      border-radius: 20px; font-size: 0.75rem; font-family: var(--font-mono); font-weight: 600;
     }
-
     .badge-green { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); border-color: var(--accent-green); }
     .badge-purple { background: rgba(139, 92, 246, 0.2); color: var(--accent-purple); border-color: var(--accent-purple); }
     .badge-cyan { background: rgba(6, 182, 212, 0.2); color: var(--accent-cyan); border-color: var(--accent-cyan); }
     .badge-yellow { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border-color: var(--accent-yellow); }
 
-    /* GRID LAYOUTS */
-    .grid-4 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.25rem;
-      margin-bottom: 2rem;
-    }
+    /* GRIDS & CARDS */
+    .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.25rem; margin-bottom: 2rem; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
 
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-    }
-
-    /* CARDS */
     .card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 1.5rem;
-      backdrop-filter: blur(12px);
-      transition: border-color 0.2s ease, transform 0.2s ease;
+      background: var(--bg-card); border: 1px solid var(--border-color);
+      border-radius: 12px; padding: 1.5rem; backdrop-filter: blur(12px);
+      transition: border-color 0.2s ease;
     }
-
-    .card:hover {
-      border-color: var(--border-bright);
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-    }
-
-    .card-title {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-
-    .card-value {
-      font-size: 1.8rem;
-      font-weight: 700;
-      font-family: var(--font-mono);
-    }
+    .card:hover { border-color: var(--border-bright); }
+    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+    .card-title { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; }
+    .card-value { font-size: 1.8rem; font-weight: 700; font-family: var(--font-mono); }
 
     /* LEVEL PROGRESS BAR */
-    .level-bar-container {
-      margin-top: 0.5rem;
-    }
-
-    .level-bar-info {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-bottom: 0.25rem;
-      font-family: var(--font-mono);
-    }
-
-    .level-bar {
-      height: 6px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 3px;
-      overflow: hidden;
-    }
-
-    .level-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
-      width: 0%;
-      transition: width 0.4s ease;
-    }
+    .level-bar-container { margin-top: 0.5rem; }
+    .level-bar-info { display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem; font-family: var(--font-mono); }
+    .level-bar { height: 6px; background: rgba(255, 255, 255, 0.08); border-radius: 3px; overflow: hidden; }
+    .level-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan)); width: 0%; transition: width 0.4s ease; }
 
     /* POMODORO TIMER */
-    .timer-display {
-      font-size: 3rem;
-      font-weight: 700;
-      font-family: var(--font-mono);
-      text-align: center;
-      margin: 1rem 0;
-      color: var(--accent-cyan);
-      text-shadow: 0 0 20px rgba(6, 182, 212, 0.3);
-    }
-
-    .btn-group {
-      display: flex;
-      gap: 0.5rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 0.6rem 1.2rem;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      background: rgba(255,255,255,0.05);
-      color: var(--text-main);
-      font-weight: 600;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .btn:hover {
-      background: rgba(255,255,255,0.1);
-      border-color: var(--border-bright);
-    }
-
-    .btn-primary {
-      background: var(--accent-blue);
-      border-color: var(--accent-blue);
-      color: #fff;
-    }
-
-    .btn-primary:hover {
-      background: #2563eb;
-      box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
-    }
-
-    .btn-danger {
-      background: rgba(239, 68, 68, 0.15);
-      border-color: rgba(239, 68, 68, 0.4);
-      color: #f87171;
-    }
+    .timer-display { font-size: 3rem; font-weight: 700; font-family: var(--font-mono); text-align: center; margin: 1rem 0; color: var(--accent-cyan); text-shadow: 0 0 20px rgba(6, 182, 212, 0.3); }
+    .btn-group { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
+    .btn { padding: 0.6rem 1.2rem; border-radius: 8px; border: 1px solid var(--border-color); background: rgba(255,255,255,0.05); color: var(--text-main); font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; }
+    .btn:hover { background: rgba(255,255,255,0.1); border-color: var(--border-bright); }
+    .btn-primary { background: var(--accent-blue); border-color: var(--accent-blue); color: #fff; }
+    .btn-primary:hover { background: #2563eb; box-shadow: 0 0 15px rgba(59, 130, 246, 0.4); }
+    .btn-danger { background: rgba(239, 68, 68, 0.15); border-color: rgba(239, 68, 68, 0.4); color: #f87171; }
 
     /* FILTER TABS */
-    .filter-bar {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-    }
-
-    .filter-btn {
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      border: 1px solid var(--border-color);
-      background: rgba(255, 255, 255, 0.03);
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .filter-btn:hover {
-      color: var(--text-main);
-      border-color: var(--border-bright);
-    }
-
-    .filter-btn.active {
-      background: var(--accent-blue);
-      border-color: var(--accent-blue);
-      color: #fff;
-      font-weight: 600;
-    }
+    .filter-bar { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .filter-btn { padding: 0.5rem 1rem; border-radius: 20px; border: 1px solid var(--border-color); background: rgba(255, 255, 255, 0.03); color: var(--text-muted); font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease; }
+    .filter-btn:hover { color: var(--text-main); border-color: var(--border-bright); }
+    .filter-btn.active { background: var(--accent-blue); border-color: var(--accent-blue); color: #fff; font-weight: 600; }
 
     /* HEATMAP GRID */
-    .heatmap-container {
-      overflow-x: auto;
-      padding-bottom: 0.5rem;
-    }
-
-    .heatmap-grid {
-      display: grid;
-      grid-template-rows: repeat(7, 12px);
-      grid-auto-flow: column;
-      grid-auto-columns: 12px;
-      gap: 4px;
-    }
-
-    .cell {
-      width: 12px;
-      height: 12px;
-      background-color: rgba(255, 255, 255, 0.05);
-      border-radius: 2px;
-    }
-
+    .heatmap-container { overflow-x: auto; padding-bottom: 0.5rem; }
+    .heatmap-grid { display: grid; grid-template-rows: repeat(7, 12px); grid-auto-flow: column; grid-auto-columns: 12px; gap: 4px; }
+    .cell { width: 12px; height: 12px; background-color: rgba(255, 255, 255, 0.05); border-radius: 2px; }
     .cell[data-level="1"] { background-color: rgba(16, 185, 129, 0.3); }
     .cell[data-level="2"] { background-color: rgba(16, 185, 129, 0.6); }
     .cell[data-level="3"] { background-color: rgba(16, 185, 129, 0.9); }
 
     /* PROGRESS BARS */
-    .progress-item {
-      margin-bottom: 1rem;
-    }
-
-    .progress-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.85rem;
-      margin-bottom: 0.4rem;
-      color: var(--text-muted);
-    }
-
-    .progress-bar {
-      height: 8px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
-      width: 0%;
-      transition: width 0.5s ease;
-    }
+    .progress-item { margin-bottom: 1rem; }
+    .progress-label { display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.4rem; color: var(--text-muted); }
+    .progress-bar { height: 8px; background: rgba(255, 255, 255, 0.05); border-radius: 4px; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple)); width: 0%; transition: width 0.5s ease; }
 
     /* LOG CONSOLE */
-    .log-box {
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 1rem;
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--accent-cyan);
-      max-height: 140px;
-      overflow-y: auto;
-      margin-top: 1rem;
-    }
-
-    .log-entry {
-      margin-bottom: 0.35rem;
-      opacity: 0.9;
-    }
+    .log-box { background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-cyan); max-height: 140px; overflow-y: auto; margin-top: 1rem; }
+    .log-entry { margin-bottom: 0.35rem; opacity: 0.9; }
 
     /* THEORY & CHEAT SHEET STYLES */
     .theory-box {
       background: rgba(0, 0, 0, 0.35);
       border-left: 4px solid var(--accent-blue);
       border-radius: 0 8px 8px 0;
-      padding: 1.25rem;
-      margin: 1rem 0;
-      line-height: 1.6;
-      font-size: 0.92rem;
+      padding: 1.25rem; margin: 1rem 0;
+      line-height: 1.7; font-size: 0.95rem;
     }
+    .theory-box h4 { color: var(--accent-cyan); margin-bottom: 0.6rem; font-size: 1.05rem; }
+    .theory-box p { margin-bottom: 0.75rem; }
 
-    .theory-box h4 {
-      color: var(--accent-cyan);
-      margin-bottom: 0.5rem;
-      font-size: 1rem;
-    }
-
-    .cheat-sheet-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 1rem 0;
-      font-size: 0.85rem;
-    }
-
-    .cheat-sheet-table th, .cheat-sheet-table td {
-      border: 1px solid var(--border-color);
-      padding: 0.6rem 0.8rem;
-      text-align: left;
-    }
-
-    .cheat-sheet-table th {
-      background: rgba(59, 130, 246, 0.15);
-      color: var(--accent-blue);
-      font-weight: 600;
-    }
-
-    .cheat-sheet-table tr:nth-child(even) {
-      background: rgba(255, 255, 255, 0.02);
-    }
+    .cheat-sheet-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.88rem; }
+    .cheat-sheet-table th, .cheat-sheet-table td { border: 1px solid var(--border-color); padding: 0.65rem 0.85rem; text-align: left; }
+    .cheat-sheet-table th { background: rgba(59, 130, 246, 0.15); color: var(--accent-blue); font-weight: 600; }
+    .cheat-sheet-table tr:nth-child(even) { background: rgba(255, 255, 255, 0.02); }
 
     /* QUIZ STYLES */
-    .quiz-container {
-      margin-top: 1.25rem;
-      background: rgba(0,0,0,0.3);
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 1.25rem;
-    }
-
-    .quiz-question {
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-      color: #fff;
-    }
-
-    .quiz-options {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-    }
-
+    .math-lesson-card { margin-bottom: 2rem; }
+    .quiz-container { margin-top: 1.25rem; background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem; }
+    .quiz-question { font-size: 1.05rem; font-weight: 600; margin-bottom: 1rem; color: #fff; }
+    .quiz-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.75rem; margin-bottom: 1rem; }
     .quiz-opt-btn {
-      padding: 0.8rem 1rem;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      color: var(--text-main);
-      font-size: 0.9rem;
-      cursor: pointer;
-      text-align: left;
-      transition: all 0.2s ease;
+      padding: 0.85rem 1rem; background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border-color); border-radius: 8px;
+      color: var(--text-main); font-size: 0.95rem; cursor: pointer;
+      text-align: left; transition: all 0.2s ease;
     }
-
-    .quiz-opt-btn:hover {
-      background: rgba(255,255,255,0.08);
-      border-color: var(--border-bright);
-    }
-
-    .quiz-opt-btn.correct {
-      background: rgba(16, 185, 129, 0.2) !important;
-      border-color: var(--accent-green) !important;
-      color: var(--accent-green) !important;
-      font-weight: 600;
-    }
-
-    .quiz-opt-btn.wrong {
-      background: rgba(239, 68, 68, 0.2) !important;
-      border-color: var(--accent-red) !important;
-      color: var(--accent-red) !important;
-    }
+    .quiz-opt-btn:hover { background: rgba(255,255,255,0.08); border-color: var(--border-bright); }
+    .quiz-opt-btn.correct { background: rgba(16, 185, 129, 0.2) !important; border-color: var(--accent-green) !important; color: var(--accent-green) !important; font-weight: 600; }
+    .quiz-opt-btn.wrong { background: rgba(239, 68, 68, 0.2) !important; border-color: var(--accent-red) !important; color: var(--accent-red) !important; }
 
     .ai-feedback-box {
-      margin-top: 1rem;
-      padding: 1rem;
+      margin-top: 1rem; padding: 1rem;
       background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.1));
-      border: 1px solid var(--accent-purple);
-      border-radius: 8px;
-      display: none;
+      border: 1px solid var(--accent-purple); border-radius: 8px; display: none;
       animation: fadeIn 0.3s ease;
     }
-
-    .ai-feedback-title {
-      font-weight: 700;
-      color: var(--accent-purple);
-      font-size: 0.85rem;
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .ai-feedback-text {
-      font-size: 0.88rem;
-      line-height: 1.5;
-      color: var(--text-main);
-    }
+    .ai-feedback-title { font-weight: 700; color: var(--accent-purple); font-size: 0.88rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+    .ai-feedback-text { font-size: 0.9rem; line-height: 1.6; color: var(--text-main); }
 
     .notes-box {
-      width: 100%;
-      min-height: 70px;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      color: var(--text-main);
-      padding: 0.75rem;
-      font-family: var(--font-sans);
-      font-size: 0.85rem;
-      margin-top: 0.5rem;
-      resize: vertical;
+      width: 100%; min-height: 75px; background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-color); border-radius: 8px;
+      color: var(--text-main); padding: 0.75rem; font-family: var(--font-sans);
+      font-size: 0.85rem; margin-top: 0.5rem; resize: vertical;
     }
 
-    /* CODE PREVIEW */
-    pre {
-      background: rgba(0, 0, 0, 0.5);
-      padding: 1rem;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      color: var(--accent-green);
-      overflow-x: auto;
-    }
+    pre { background: rgba(0, 0, 0, 0.5); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color); font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent-green); overflow-x: auto; }
 
     @media (max-width: 900px) {
       .sidebar { transform: translateX(-100%); }
@@ -615,7 +287,7 @@
             <h1 class="banner-title">NEXUS ELITE // Dashboard</h1>
             <p class="banner-subtitle">Целевой факультет: FIIT STU (Slovenská technická univerzita v Bratislave)</p>
           </div>
-          <span class="badge badge-green">CYBERSECURITY MODULE ONLINE (STEP 6/15)</span>
+          <span class="badge badge-green">FULL ENGINE ONLINE</span>
         </div>
 
         <!-- STATS ROW -->
@@ -720,7 +392,7 @@
         <div class="banner">
           <div>
             <h1 class="banner-title">📐 Математика: Школа, SCIO & 1 курс FIIT</h1>
-            <p class="banner-subtitle">Теория, видеолекции, конспекты и тесты.</p>
+            <p class="banner-subtitle">Полный курс с глубокой теорией, KaTeX формулами и тестами.</p>
           </div>
           <span class="badge badge-cyan">MATH ACTIVE</span>
         </div>
@@ -733,18 +405,16 @@
         <div id="math-lessons-container"></div>
       </section>
 
-      <!-- CYBERSECURITY TAB (STEP 6 ACTIVE) -->
+      <!-- CYBERSECURITY TAB -->
       <section id="cyber" class="tab-content">
         <div class="banner">
           <div>
             <h1 class="banner-title">🛡️ Кибербезопасность, Сети & Архитектура (Počítačové siete)</h1>
-            <p class="banner-subtitle">Фундаментальная базовая база для 1 курса FIIT STU: Модель OSI, IP-адресация, маски подсетей и сетевые протоколы.</p>
+            <p class="banner-subtitle">Модель OSI, IP-адресация, маски подсетей и сетевые протоколы.</p>
           </div>
-          <span class="badge badge-yellow">STEP 6 ACTIVE</span>
+          <span class="badge badge-yellow">CYBER ACTIVE</span>
         </div>
-        <div id="cyber-lessons-container">
-          <!-- Dynamically populated cybersecurity lessons -->
-        </div>
+        <div id="cyber-lessons-container"></div>
       </section>
 
       <!-- TAB SECTIONS FOR STEPS 7-15 -->
@@ -784,33 +454,150 @@
         notes: {}
       },
       math: [
+        // 1. SCHOOL MATHEMATICS
         {
           id: 'math_1',
           category: 'school',
-          title: '1. Дроби, Степени и Корни (Mocniny a odmocniny)',
-          theory: 'Упрощение степенных выражений: a^m * a^n = a^(m+n) и (a^m)^n = a^(m*n).',
+          title: '1. Квадратные Уравнения и Дискриминант (Kvadratické rovnice)',
+          theoryHTML: `
+            <div class="theory-box">
+              <h4>📖 Теоретический материал: Квадратные Уравнения</h4>
+              <p>Полное квадратное уравнение имеет стандартный вид: $$ax^2 + bx + c = 0 \quad (a \neq 0)$$</p>
+              <p>Чтобы найти его корни, сначала рассчитываем <b>дискриминант ($D$)</b>:</p>
+              <p>$$D = b^2 - 4ac$$</p>
+              <p><b>Правило количества корней:</b></p>
+              <ul>
+                <li>Если $D > 0$: Уравнение имеет два различных действительных корня: $$x_{1,2} = \\frac{-b \\pm \\sqrt{D}}{2a}$$</li>
+                <li>Если $D = 0$: Уравнение имеет один корень кратности 2: $$x = -\\frac{b}{2a}$$</li>
+                <li>Если $D < 0$: Действительных корней нет (корни являются комплексными числами).</li>
+              </ul>
+              <p><b>Теорема Виета (Виетовские формулы):</b> Если $a=1$, то для уравнения $x^2 + px + q = 0$ верно: $$x_1 + x_2 = -p \quad \\text{и} \quad x_1 \\cdot x_2 = q$$</p>
+            </div>
+          `,
           questions: [
             {
               id: 'm1_q1',
-              question: 'Упростите выражение: (2^5 * 4^2) / 8^3',
-              options: ['1', '2', '1/2', '4'],
+              question: 'Чему равны корни уравнения $x^2 - 5x + 6 = 0$ ?',
+              options: ['$x_1 = 1, x_2 = 6$', '$x_1 = 2, x_2 = 3$', '$x_1 = -2, x_2 = -3$', '$x_1 = 0, x_2 = 5$'],
+              correct: 1,
+              explanation: 'Дискриминант $D = (-5)^2 - 4(1)(6) = 25 - 24 = 1$.\nПрименяем формулу корней: $x_{1,2} = \\frac{5 \\pm \\sqrt{1}}{2} \\Rightarrow x_1 = 3, x_2 = 2$.\nПо теореме Виета: $2+3=5$ и $2 \\cdot 3 = 6$.'
+            },
+            {
+              id: 'm1_q2',
+              question: 'При каком значении параметра $k$ уравнение $x^2 + kx + 9 = 0$ имеет ровно один корень?',
+              options: ['$k = \\pm 6$', '$k = 6$', '$k = 3$', '$k = \\pm 3$'],
               correct: 0,
-              explanation: '2^5 = 32. 4^2 = 16. 8^3 = 512. Числитель: 32*16 = 512. 512/512 = 1.'
+              explanation: 'Уравнение имеет 1 корень, когда дискриминант $D = 0$.\n$D = k^2 - 4(1)(9) = k^2 - 36 = 0 \\Rightarrow k^2 = 36 \\Rightarrow k = \\pm 6$.'
             }
           ]
         },
         {
+          id: 'math_2',
+          category: 'school',
+          title: '2. Степени и Корни (Mocniny a odmocniny)',
+          theoryHTML: `
+            <div class="theory-box">
+              <h4>📖 Теоретический материал: Действия со степенями</h4>
+              <p>Основные свойства степеней с действительным показателем:</p>
+              <table class="cheat-sheet-table">
+                <thead><tr><th>Свойство</th><th>Формула</th><th>Пример</th></tr></thead>
+                <tbody>
+                  <tr><td>Умножение степеней</td><td>$$a^m \\cdot a^n = a^{m+n}$$</td><td>$$2^3 \\cdot 2^2 = 2^5 = 32$$</td></tr>
+                  <tr><td>Деление степеней</td><td>$$\\frac{a^m}{a^n} = a^{m-n}$$</td><td>$$\\frac{2^5}{2^2} = 2^3 = 8$$</td></tr>
+                  <tr><td>Возведение в степень</td><td>$$(a^m)^n = a^{m \\cdot n}$$</td><td>$$(2^2)^3 = 2^6 = 64$$</td></tr>
+                  <tr><td>Степень с дробным показателем</td><td>$$a^{\\frac{m}{n}} = \\sqrt[n]{a^m}$$</td><td>$$8^{\\frac{2}{3}} = \\sqrt[3]{8^2} = 4$$</td></tr>
+                </tbody>
+              </table>
+            </div>
+          `,
+          questions: [
+            {
+              id: 'm2_q1',
+              question: 'Упростите выражение и найдите его значение: $\\frac{2^5 \\cdot 4^2}{8^3}$',
+              options: ['$1$', '$2$', '$\\frac{1}{2}$', '$4$'],
+              correct: 0,
+              explanation: 'Приводим все основания к числу $2$:\n$4^2 = (2^2)^2 = 2^4$.\n$8^3 = (2^3)^3 = 2^9$.\nЧислитель: $2^5 \\cdot 2^4 = 2^9$.\nДробь: $\\frac{2^9}{2^9} = 1$.'
+            }
+          ]
+        },
+
+        // 2. SCIO / OSP EXAM
+        {
+          id: 'math_scio_1',
+          category: 'scio',
+          title: '3. Формальная Логика и Законы Де Моргана (Výroková logika)',
+          theoryHTML: `
+            <div class="theory-box">
+              <h4>🧠 SCIO/OSP: Логика Высказываний</h4>
+              <p>Импликация $A \\Rightarrow B$ ("Если A, то B") <b>ЛОЖНА только в одном случае</b>: когда $A$ истинно ($1$), а $B$ ложно ($0$).</p>
+              <p><b>Формула отрицания импликации:</b></p>
+              <p>$$\\neg(A \\Rightarrow B) \\equiv A \\land \\neg B$$</p>
+              <p><i>Словесно: "A происходит, И при этом B НЕ происходит".</i></p>
+              <p><b>Законы Де Моргана:</b></p>
+              <p>$$\\neg(A \\land B) \\equiv \\neg A \\lor \\neg B \quad | \quad \\neg(A \\lor B) \\equiv \\neg A \\land \\neg B$$</p>
+            </div>
+          `,
+          questions: [
+            {
+              id: 'ms1_q1',
+              question: 'Каково строгое логическое отрицание утверждения: "Если студент сдает экзамен, то он получает стипендию"?',
+              options: [
+                'Студент не сдает экзамен и не получает стипендию.',
+                'Студент сдает экзамен, но не получает стипендию.',
+                'Если студент не сдает экзамен, то не получает стипендию.',
+                'Студент не сдает экзамен или получает стипендию.'
+              ],
+              correct: 1,
+              explanation: 'По формуле $\\neg(A \\Rightarrow B) \\equiv A \\land \\neg B$:\n$A$: "Студент сдает экзамен".\n$\\neg B$: "Студент НЕ получает стипендию".\nИтоговое отрицание: "Студент сдает экзамен, НО (И) не получает стипендию".'
+            }
+          ]
+        },
+
+        // 3. HIGHER MATHEMATICS (FIIT STU 1ST YEAR)
+        {
           id: 'math_higher_1',
           category: 'higher',
-          title: '2. Пределы и Производные (Limity a derivácie)',
-          theory: 'Производная f\'(x) задает скорость изменения функции.',
+          title: '4. Высшая Математика: Пределы и Замечательный Предел (Limity)',
+          theoryHTML: `
+            <div class="theory-box">
+              <h4>🎓 1 курс FIIT STU: Теория Пределов</h4>
+              <p>Предел функции в точке описывает значение, к которому стремится $f(x)$ при приближении $x$ к $a$:</p>
+              <p>$$\\lim_{x \\to a} f(x) = L$$</p>
+              <p><b>Первый Замечательный Предел (Фундаментальная теорема):</b></p>
+              <p>$$\\lim_{x \\to 0} \\frac{\\sin x}{x} = 1$$</p>
+              <p><b>Правило Лопиталя (для неопределенностей $\\frac{0}{0}$ и $\\frac{\\infty}{\\infty}$):</b></p>
+              <p>$$\\lim_{x \\to a} \\frac{f(x)}{g(x)} = \\lim_{x \\to a} \\frac{f'(x)}{g'(x)}$$</p>
+            </div>
+          `,
           questions: [
             {
               id: 'mh1_q1',
-              question: 'Чему равен предел: lim (x -> 0) (sin(x) / x) ?',
-              options: ['0', '1', 'Бесконечность', 'Не существует'],
-              correct: 1,
-              explanation: 'Замечательный предел lim (x->0) sin(x)/x = 1.'
+              question: 'Вычислите значение первого замечательного предела: $\\lim_{x \\to 0} \\frac{\\sin(3x)}{x}$',
+              options: ['$0$', '$1$', '$3$', 'Не существует'],
+              correct: 2,
+              explanation: 'Домножаем и делим на $3$:\n$\\lim_{x \\to 0} \\frac{\\sin(3x)}{3x} \\cdot 3 = 1 \\cdot 3 = 3$.\nИли по Правилу Лопиталя: $\\frac{d/dx(\\sin 3x)}{d/dx(x)} = \\frac{3\\cos 3x}{1} = 3\\cos(0) = 3$.'
+            }
+          ]
+        },
+        {
+          id: 'math_higher_2',
+          category: 'higher',
+          title: '5. Матрицы и Определители 2x2 и 3x3 (Matice a determinanty)',
+          theoryHTML: `
+            <div class="theory-box">
+              <h4>🎓 Линейная Алгебра: Вычисление Определителей</h4>
+              <p>Определитель (Детерминант) матрицы $2 \\times 2$ рассчитывается крест-накрест:</p>
+              <p>$$\\det A = \\begin{vmatrix} a & b \\\\ c & d \\end{vmatrix} = a \\cdot d - b \\cdot c$$</p>
+              <p><b>Пример:</b> Для матрицы $A = \\begin{pmatrix} 5 & 2 \\\\ 3 & 4 \\end{pmatrix}$ детерминант равен $5 \\cdot 4 - 2 \\cdot 3 = 20 - 6 = 14$.</p>
+            </div>
+          `,
+          questions: [
+            {
+              id: 'mh2_q1',
+              question: 'Чему равен определитель матрицы $A = \\begin{pmatrix} 4 & 2 \\\\ 3 & 5 \\end{pmatrix}$ ?',
+              options: ['$14$', '$20$', '$26$', '$12$'],
+              correct: 0,
+              explanation: 'Применяем формулу $ad - bc$:\n$\\det A = (4 \\cdot 5) - (2 \\cdot 3) = 20 - 6 = 14$.'
             }
           ]
         }
@@ -823,29 +610,21 @@
           theoryHTML: `
             <div class="theory-box">
               <h4>📚 Глубокий разбор: 7 Уровней Модели OSI</h4>
-              <p>Модель <b>OSI (Open Systems Interconnection)</b> описывает, как данные передаются от приложения на одном компьютере через физические провода/эфир к приложению на другом компьютере.</p>
-              
+              <p>Модель <b>OSI (Open Systems Interconnection)</b> определяет этапы передачи данных по сети.</p>
               <table class="cheat-sheet-table">
                 <thead>
-                  <tr>
-                    <th>№</th>
-                    <th>Уровень (Layer)</th>
-                    <th>Единица данных (PDU)</th>
-                    <th>Протоколы / Оборудование</th>
-                  </tr>
+                  <tr><th>№</th><th>Уровень</th><th>PDU (Единица)</th><th>Протоколы / Устройства</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td>7</td><td><b>Application (Прикладной)</b></td><td>Data (Данные)</td><td>HTTP, HTTPS, SSH, DNS, FTP, SMTP</td></tr>
-                  <tr><td>6</td><td><b>Presentation (Представительский)</b></td><td>Data (Данные)</td><td>SSL/TLS, ASCII, JPEG, PNG (Шифрование, сжатие)</td></tr>
-                  <tr><td>5</td><td><b>Session (Сеансовый)</b></td><td>Data (Данные)</td><td>NetBIOS, RPC, SOCKS (Управление сессиями)</td></tr>
-                  <tr><td>4</td><td><b>Transport (Транспортный)</b></td><td><b>Segment</b> (TCP) / Datagram (UDP)</td><td>TCP (надежный), UDP (быстрый), Порты (80, 443, 22)</td></tr>
-                  <tr><td>3</td><td><b>Network (Сетевой)</b></td><td><b>Packet</b> (Пакет)</td><td>IP (IPv4/IPv6), ICMP (ping), Routers (Маршрутизаторы)</td></tr>
-                  <tr><td>2</td><td><b>Data Link (Канальный)</b></td><td><b>Frame</b> (Кадр)</td><td>Ethernet, Wi-Fi, MAC-адреса, Switches (Коммутаторы)</td></tr>
-                  <tr><td>1</td><td><b>Physical (Физический)</b></td><td><b>Bit</b> (Биты: 0 и 1)</td><td>Кабели (UTP, Оптоволокно), Hubs, Электрические сигналы</td></tr>
+                  <tr><td>7</td><td><b>Application</b></td><td>Data</td><td>HTTP, HTTPS, SSH, DNS</td></tr>
+                  <tr><td>6</td><td><b>Presentation</b></td><td>Data</td><td>SSL/TLS, ASCII (Шифрование)</td></tr>
+                  <tr><td>5</td><td><b>Session</b></td><td>Data</td><td>NetBIOS, RPC</td></tr>
+                  <tr><td>4</td><td><b>Transport</b></td><td><b>Segment</b> / Datagram</td><td>TCP, UDP, Порты (80, 443)</td></tr>
+                  <tr><td>3</td><td><b>Network</b></td><td><b>Packet</b> (Пакет)</td><td>IP, ICMP, Routers (Маршрутизаторы)</td></tr>
+                  <tr><td>2</td><td><b>Data Link</b></td><td><b>Frame</b> (Кадр)</td><td>Ethernet, MAC-адреса, Switches (Коммутаторы)</td></tr>
+                  <tr><td>1</td><td><b>Physical</b></td><td>Bit (Биты)</td><td>Кабели, Hubs, Электричество</td></tr>
                 </tbody>
               </table>
-
-              <p><b>🔑 Что нужно запомнить для экзамена FIIT STU:</b> Коммутатор (Switch Layer 2) работает с MAC-адресами и кадрами (Frames). Маршрутизатор (Router Layer 3) работает с IP-адресами и пакетами (Packets).</p>
             </div>
           `,
           questions: [
@@ -859,64 +638,7 @@
                 'Уровень 1 (Physical) — Биты (Bits)'
               ],
               correct: 1,
-              explanation: 'Сетевой коммутатор (L2 Switch) работает на 2-м уровне OSI (Data Link). Он анализирует MAC-адреса получателя и передает Кадры (Frames).'
-            },
-            {
-              id: 'c1_q2',
-              question: 'Чем фундаментально отличается протокол TCP от UDP?',
-              options: [
-                'TCP передает данные быстрее UDP, но не проверяет ошибки.',
-                'TCP установит соединение (3-way handshake) и гарантирует доставку пакетов, а UDP отправляет данные без подтверждения.',
-                'UDP шифрует данные, а TCP передает открытый текст.',
-                'TCP работает на сетевом уровне, а UDP на прикладном.'
-              ],
-              correct: 1,
-              explanation: 'TCP (Transmission Control Protocol) гарантирует доставку и порядок пакетов (использует SYN, SYN-ACK, ACK). UDP работает без установки соединения (connectionless) и идеально подходит для видеостриминга и онлайн-игр.'
-            }
-          ]
-        },
-        {
-          id: 'cyber_2',
-          title: '2. IP-адресация, CIDR и Маски подсетей (IP adresácia a podsiete)',
-          theoryHTML: `
-            <div class="theory-box">
-              <h4>🧠 Шпаргалка по расчёту подсетей IPv4 & CIDR</h4>
-              <p>IPv4 состоит из 32 бит (4 октета по 8 бит). Запись <b>CIDR</b> (например, <code>192.168.1.0/24</code>) показывает, сколько бит отведено под адрес сети.</p>
-              
-              <p><b>Формулы расчета подсети:</b></p>
-              <ul>
-                <li>Количество бит под хосты: <code>h = 32 - Prefix</code></li>
-                <li>Всего IP-адресов в подсети: <code>2^h</code></li>
-                <li>Доступно для устройств (хостов): <code>2^h - 2</code> (минус адрес сети и бродкаст)</li>
-              </ul>
-
-              <table class="cheat-sheet-table" style="margin-top:1rem;">
-                <thead>
-                  <tr><th>Маска (CIDR)</th><th>Десятичная маска</th><th>Всего IP</th><th>Полезных хостов</th></tr>
-                </thead>
-                <tbody>
-                  <tr><td>/24</td><td>255.255.255.0</td><td>256</td><td><b>254</b></td></tr>
-                  <tr><td>/25</td><td>255.255.255.128</td><td>128</td><td><b>126</b></td></tr>
-                  <tr><td>/26</td><td>255.255.255.192</td><td>64</td><td><b>62</b></td></tr>
-                  <tr><td>/30</td><td>255.255.255.252</td><td>4</td><td><b>2</b> (Точка-Точка)</td></tr>
-                </tbody>
-              </table>
-            </div>
-          `,
-          questions: [
-            {
-              id: 'c2_q1',
-              question: 'Сколько полезных IP-адресов для компьютеров доступно в подсети с маской 192.168.10.0/26 ?',
-              options: ['64', '62', '126', '254'],
-              correct: 1,
-              explanation: 'Маска /26 оставляет под хосты h = 32 - 26 = 6 бит.\nВсего IP-адресов: 2^6 = 64.\nМинус 1 (сетевой адрес) и минус 1 (широковещательный/broadcast) = 62 полезных хоста.'
-            },
-            {
-              id: 'c2_q2',
-              question: 'Какой из следующих IP-адресов относится к диапазону Частных (Private) адресов, не маршрутизируемых в глобальном Интернете?',
-              options: ['8.8.8.8', '172.16.5.20', '200.100.10.1', '1.1.1.1'],
-              correct: 1,
-              explanation: 'Диапазоны приватных IP (RFC 1918):\n1) 10.0.0.0 – 10.255.255.255 (/8)\n2) 172.16.0.0 – 172.31.255.255 (/12)\n3) 192.168.0.0 – 192.168.255.255 (/16).\nАдрес 172.16.5.20 входит во 2-й приватный диапазон.'
+              explanation: 'Сетевой коммутатор (Switch L2) работает на 2-м уровне OSI (Data Link). Он пересылает Кадры (Frames) на основе MAC-адресов.'
             }
           ]
         }
@@ -925,7 +647,6 @@
 
     let currentMathFilter = 'all';
 
-    // SYSTEM LOGGING ENGINE
     function logSystem(msg) {
       const box = document.getElementById('system-log');
       if (!box) return;
@@ -936,14 +657,11 @@
       box.scrollTop = box.scrollHeight;
     }
 
-    // STATE ENGINE LOGIC
     function saveState() {
       try {
         localStorage.setItem(STATE_KEY, JSON.stringify(DATABASE.user));
         updateUI();
-      } catch (e) {
-        console.error('Save error', e);
-      }
+      } catch (e) { console.error('Save error', e); }
     }
 
     function loadState() {
@@ -952,9 +670,7 @@
         try {
           const parsed = JSON.parse(saved);
           DATABASE.user = { ...DATABASE.user, ...parsed };
-        } catch (e) {
-          console.error('Load error', e);
-        }
+        } catch (e) { console.error('Load error', e); }
       }
       updateUI();
     }
@@ -963,16 +679,10 @@
       if (confirm('Сбросить весь прогресс?')) {
         localStorage.removeItem(STATE_KEY);
         DATABASE.user = {
-          name: "Dani Abdeh",
-          xp: 0,
-          level: 1,
-          streak: 1,
+          name: "Dani Abdeh", xp: 0, level: 1, streak: 1,
           lastActiveDate: new Date().toISOString().slice(0, 10),
-          completedLessons: [],
-          accuracy: 100,
-          totalQuestionsAnswered: 0,
-          correctQuestionsAnswered: 0,
-          notes: {}
+          completedLessons: [], accuracy: 100,
+          totalQuestionsAnswered: 0, correctQuestionsAnswered: 0, notes: {}
         };
         saveState();
         renderMathLessons();
@@ -998,7 +708,6 @@
       saveState();
     }
 
-    // UI UPDATER ENGINE
     function updateUI() {
       const u = DATABASE.user;
 
@@ -1012,7 +721,6 @@
       document.getElementById('level-progress-text').textContent = `${currentXP} / 200 XP`;
       document.getElementById('level-bar-fill').style.width = `${(currentXP / 200) * 100}%`;
 
-      // Subject Progress Bars
       const mathLessons = DATABASE.math.length;
       const mathDone = DATABASE.math.filter(l => u.completedLessons.includes(l.id)).length;
       const mathPct = mathLessons > 0 ? Math.round((mathDone / mathLessons) * 100) : 0;
@@ -1029,7 +737,6 @@
       if (jsonPre) jsonPre.textContent = JSON.stringify(u, null, 2);
     }
 
-    // FILTER MATH LESSONS
     function filterMath(category, btnElement) {
       currentMathFilter = category;
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -1037,7 +744,18 @@
       renderMathLessons();
     }
 
-    // RENDER MATH LESSONS
+    function triggerKaTeX() {
+      if (window.renderMathInElement) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
     function renderMathLessons() {
       const container = document.getElementById('math-lessons-container');
       if (!container) return;
@@ -1049,6 +767,8 @@
         const isCompleted = DATABASE.user.completedLessons.includes(lesson.id);
         const card = document.createElement('div');
         card.className = 'card math-lesson-card';
+
+        const existingNote = (DATABASE.user.notes && DATABASE.user.notes[lesson.id]) || '';
 
         let quizHTML = '';
         lesson.questions.forEach((q, qIdx) => {
@@ -1075,14 +795,19 @@
             <h3>${lesson.title}</h3>
             ${isCompleted ? '<span class="badge badge-green">✓ Пройдено</span>' : '<span class="badge">В процессе</span>'}
           </div>
-          <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1rem;">${lesson.theory}</p>
+          ${lesson.theoryHTML}
+          <div style="margin-top:1rem;">
+            <label style="font-size:0.8rem; color:var(--text-muted);">📝 Конспект и заметки по теме (автосохранение):</label>
+            <textarea class="notes-box" placeholder="Запишите сюда формулы..." oninput="saveNote('${lesson.id}', this.value)">${existingNote}</textarea>
+          </div>
           ${quizHTML}
         `;
         container.appendChild(card);
       });
+
+      setTimeout(triggerKaTeX, 50);
     }
 
-    // RENDER CYBERSECURITY LESSONS WITH DEEP THEORY
     function renderCyberLessons() {
       const container = document.getElementById('cyber-lessons-container');
       if (!container) return;
@@ -1125,16 +850,17 @@
           </div>
           ${lesson.theoryHTML}
           <div style="margin-top:1rem;">
-            <label style="font-size:0.8rem; color:var(--text-muted);">📝 Ваши заметки по теме (автосохранение):</label>
+            <label style="font-size:0.8rem; color:var(--text-muted);">📝 Заметки по теме (автосохранение):</label>
             <textarea class="notes-box" placeholder="Запишите сюда термины..." oninput="saveNote('${lesson.id}', this.value)">${existingNote}</textarea>
           </div>
           ${quizHTML}
         `;
         container.appendChild(card);
       });
+
+      setTimeout(triggerKaTeX, 50);
     }
 
-    // CHECK QUIZ ANSWER LOGIC (UNIVERSAL FOR ALL SUBJECTS)
     function checkAnswer(subjectKey, lessonId, qIdx, selectedOpt) {
       const lesson = DATABASE[subjectKey].find(l => l.id === lessonId);
       const question = lesson.questions[qIdx];
@@ -1154,7 +880,7 @@
 
         if (!DATABASE.user.completedLessons.includes(lessonId)) {
           DATABASE.user.completedLessons.push(lessonId);
-          logSystem(`Урок "${lesson.title}" успешно пройден!`);
+          logSystem(`Урок "${lesson.title}" пройден!`);
         }
       } else {
         buttons[selectedOpt].classList.add('wrong');
@@ -1162,7 +888,7 @@
         buttons.forEach(btn => btn.style.pointerEvents = 'none');
 
         feedbackBox.style.display = 'block';
-        logSystem(`Ошибка в тесте по сети. Разбор ИИ активирован.`);
+        logSystem(`Ошибка в тесте. Показан разбор ИИ.`);
       }
 
       DATABASE.user.accuracy = Math.round((DATABASE.user.correctQuestionsAnswered / DATABASE.user.totalQuestionsAnswered) * 100);
@@ -1172,7 +898,6 @@
       if (subjectKey === 'cybersecurity') renderCyberLessons();
     }
 
-    // SPA TAB ROUTER
     function switchTab(tabId) {
       document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
       document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
@@ -1183,9 +908,10 @@
       const activeBtn = Array.from(document.querySelectorAll('.nav-item button'))
         .find(btn => btn.getAttribute('onclick').includes(tabId));
       if (activeBtn) activeBtn.parentElement.classList.add('active');
+
+      setTimeout(triggerKaTeX, 50);
     }
 
-    // HEATMAP GENERATOR
     function renderHeatmap() {
       const grid = document.getElementById('heatmap-grid');
       if (!grid) return;
@@ -1198,7 +924,6 @@
       }
     }
 
-    // POMODORO TIMER ENGINE
     let timerInterval = null;
     let timeLeft = 25 * 60;
 
@@ -1224,18 +949,9 @@
       }, 1000);
     }
 
-    function pauseTimer() {
-      clearInterval(timerInterval);
-      timerInterval = null;
-    }
+    function pauseTimer() { clearInterval(timerInterval); timerInterval = null; }
+    function resetTimer() { pauseTimer(); timeLeft = 25 * 60; updateTimerDisplay(); }
 
-    function resetTimer() {
-      pauseTimer();
-      timeLeft = 25 * 60;
-      updateTimerDisplay();
-    }
-
-    // INITIALIZATION
     window.addEventListener('DOMContentLoaded', () => {
       renderHeatmap();
       loadState();
