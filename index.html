@@ -20,6 +20,7 @@
       --accent-cyan: #06b6d4;
       --accent-green: #10b981;
       --accent-red: #ef4444;
+      --accent-yellow: #f59e0b;
       --text-main: #f4f4f5;
       --text-muted: #a1a1aa;
       --font-sans: 'Inter', sans-serif;
@@ -192,23 +193,10 @@
       font-weight: 600;
     }
 
-    .badge-green {
-      background: rgba(16, 185, 129, 0.2);
-      color: var(--accent-green);
-      border-color: var(--accent-green);
-    }
-
-    .badge-purple {
-      background: rgba(139, 92, 246, 0.2);
-      color: var(--accent-purple);
-      border-color: var(--accent-purple);
-    }
-
-    .badge-cyan {
-      background: rgba(6, 182, 212, 0.2);
-      color: var(--accent-cyan);
-      border-color: var(--accent-cyan);
-    }
+    .badge-green { background: rgba(16, 185, 129, 0.2); color: var(--accent-green); border-color: var(--accent-green); }
+    .badge-purple { background: rgba(139, 92, 246, 0.2); color: var(--accent-purple); border-color: var(--accent-purple); }
+    .badge-cyan { background: rgba(6, 182, 212, 0.2); color: var(--accent-cyan); border-color: var(--accent-cyan); }
+    .badge-yellow { background: rgba(245, 158, 11, 0.2); color: var(--accent-yellow); border-color: var(--accent-yellow); }
 
     /* GRID LAYOUTS */
     .grid-4 {
@@ -440,50 +428,47 @@
       opacity: 0.9;
     }
 
-    /* QUIZ & MATH STYLES */
-    .math-lesson-card {
-      margin-bottom: 1.5rem;
-    }
-
-    .video-container {
-      position: relative;
-      padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-      height: 0;
-      overflow: hidden;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
+    /* THEORY & CHEAT SHEET STYLES */
+    .theory-box {
+      background: rgba(0, 0, 0, 0.35);
+      border-left: 4px solid var(--accent-blue);
+      border-radius: 0 8px 8px 0;
+      padding: 1.25rem;
       margin: 1rem 0;
-      background: #000;
+      line-height: 1.6;
+      font-size: 0.92rem;
     }
 
-    .video-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
+    .theory-box h4 {
+      color: var(--accent-cyan);
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
     }
 
-    .notes-box {
+    .cheat-sheet-table {
       width: 100%;
-      min-height: 80px;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      color: var(--text-main);
-      padding: 0.75rem;
-      font-family: var(--font-sans);
+      border-collapse: collapse;
+      margin: 1rem 0;
       font-size: 0.85rem;
-      margin-top: 0.5rem;
-      resize: vertical;
     }
 
-    .notes-box:focus {
-      outline: none;
-      border-color: var(--accent-blue);
+    .cheat-sheet-table th, .cheat-sheet-table td {
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 0.8rem;
+      text-align: left;
     }
 
+    .cheat-sheet-table th {
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--accent-blue);
+      font-weight: 600;
+    }
+
+    .cheat-sheet-table tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* QUIZ STYLES */
     .quiz-container {
       margin-top: 1.25rem;
       background: rgba(0,0,0,0.3);
@@ -562,6 +547,20 @@
       color: var(--text-main);
     }
 
+    .notes-box {
+      width: 100%;
+      min-height: 70px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-main);
+      padding: 0.75rem;
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      resize: vertical;
+    }
+
     /* CODE PREVIEW */
     pre {
       background: rgba(0, 0, 0, 0.5);
@@ -594,7 +593,7 @@
         <ul class="nav-list">
           <li class="nav-item active"><button onclick="switchTab('dashboard')">📊 Дашборд</button></li>
           <li class="nav-item"><button onclick="switchTab('math')">📐 Математика & SCIO</button></li>
-          <li class="nav-item"><button onclick="switchTab('cyber')">🛡️ Кибербез & CLI</button></li>
+          <li class="nav-item"><button onclick="switchTab('cyber')">🛡️ Кибербез & Сети</button></li>
           <li class="nav-item"><button onclick="switchTab('c-lang')">💻 Язык C</button></li>
           <li class="nav-item"><button onclick="switchTab('slovak')">🇸🇰 Словацкий & Голос</button></li>
           <li class="nav-item"><button onclick="switchTab('ai-tutor')">🤖 AI-Тьютор</button></li>
@@ -616,7 +615,7 @@
             <h1 class="banner-title">NEXUS ELITE // Dashboard</h1>
             <p class="banner-subtitle">Целевой факультет: FIIT STU (Slovenská technická univerzita v Bratislave)</p>
           </div>
-          <span class="badge badge-green">HIGHER MATH ONLINE (STEP 5/15)</span>
+          <span class="badge badge-green">CYBERSECURITY MODULE ONLINE (STEP 6/15)</span>
         </div>
 
         <!-- STATS ROW -->
@@ -688,11 +687,11 @@
             <span class="card-title">📈 Прогресс по предметам</span>
           </div>
           <div class="progress-item">
-            <div class="progress-label"><span>Математика & SCIO & Higher</span><span id="prog-math-text">0%</span></div>
+            <div class="progress-label"><span>Математика & SCIO</span><span id="prog-math-text">0%</span></div>
             <div class="progress-bar"><div class="progress-fill" id="prog-math-bar"></div></div>
           </div>
           <div class="progress-item">
-            <div class="progress-label"><span>Кибербезопасность & CLI</span><span id="prog-cyber-text">0%</span></div>
+            <div class="progress-label"><span>Кибербезопасность & Сети</span><span id="prog-cyber-text">0%</span></div>
             <div class="progress-bar"><div class="progress-fill" id="prog-cyber-bar"></div></div>
           </div>
           <div class="progress-item">
@@ -716,31 +715,39 @@
         </div>
       </section>
 
-      <!-- MATH TAB (STEPS 3, 4 & 5 COMPLETE) -->
+      <!-- MATH TAB -->
       <section id="math" class="tab-content">
         <div class="banner">
           <div>
             <h1 class="banner-title">📐 Математика: Школа, SCIO & 1 курс FIIT</h1>
-            <p class="banner-subtitle">Полный цикл: от базовых уравнений до Высшей математики, матриц и пределов.</p>
+            <p class="banner-subtitle">Теория, видеолекции, конспекты и тесты.</p>
           </div>
-          <span class="badge badge-cyan">STEP 5 ACTIVE</span>
+          <span class="badge badge-cyan">MATH ACTIVE</span>
         </div>
-
-        <!-- FILTER BUTTONS -->
         <div class="filter-bar">
           <button class="filter-btn active" onclick="filterMath('all', this)">Все темы</button>
           <button class="filter-btn" onclick="filterMath('school', this)">Школьный базис</button>
           <button class="filter-btn" onclick="filterMath('scio', this)">SCIO / OSP Экзамен</button>
           <button class="filter-btn" onclick="filterMath('higher', this)">Высшая математика (1 курс)</button>
         </div>
+        <div id="math-lessons-container"></div>
+      </section>
 
-        <div id="math-lessons-container">
-          <!-- Dynamically populated math, SCIO & higher lessons -->
+      <!-- CYBERSECURITY TAB (STEP 6 ACTIVE) -->
+      <section id="cyber" class="tab-content">
+        <div class="banner">
+          <div>
+            <h1 class="banner-title">🛡️ Кибербезопасность, Сети & Архитектура (Počítačové siete)</h1>
+            <p class="banner-subtitle">Фундаментальная базовая база для 1 курса FIIT STU: Модель OSI, IP-адресация, маски подсетей и сетевые протоколы.</p>
+          </div>
+          <span class="badge badge-yellow">STEP 6 ACTIVE</span>
+        </div>
+        <div id="cyber-lessons-container">
+          <!-- Dynamically populated cybersecurity lessons -->
         </div>
       </section>
 
-      <!-- TAB SECTIONS FOR STEPS 6-15 -->
-      <section id="cyber" class="tab-content"><div class="card"><h2>🛡️ Кибербезопасность & CLI</h2><p style="color:var(--text-muted); margin-top:0.5rem;">Модуль разрабатывается на Шагах 6, 7 и 8.</p></div></section>
+      <!-- TAB SECTIONS FOR STEPS 7-15 -->
       <section id="c-lang" class="tab-content"><div class="card"><h2>💻 Язык C (C Programming)</h2><p style="color:var(--text-muted); margin-top:0.5rem;">Модуль разрабатывается на Шагах 9 и 10.</p></div></section>
       <section id="slovak" class="tab-content"><div class="card"><h2>🇸🇰 Словацкий язык & Голос</h2><p style="color:var(--text-muted); margin-top:0.5rem;">Модуль разрабатывается на Шагах 11 и 12.</p></div></section>
       <section id="ai-tutor" class="tab-content"><div class="card"><h2>🤖 AI-Тьютор (Gemini API)</h2><p style="color:var(--text-muted); margin-top:0.5rem;">Модуль разрабатывается на Шаге 13.</p></div></section>
@@ -777,119 +784,139 @@
         notes: {}
       },
       math: [
-        // SCHOOL BASE (STEP 3)
         {
           id: 'math_1',
           category: 'school',
           title: '1. Дроби, Степени и Корни (Mocniny a odmocniny)',
-          theory: 'В математических тестах SCIO/OSP ключевую роль играет быстрое упрощение степенных выражений и иррациональных дробей. Помните: a^m * a^n = a^(m+n) и (a^m)^n = a^(m*n).',
+          theory: 'Упрощение степенных выражений: a^m * a^n = a^(m+n) и (a^m)^n = a^(m*n).',
           questions: [
             {
               id: 'm1_q1',
               question: 'Упростите выражение: (2^5 * 4^2) / 8^3',
               options: ['1', '2', '1/2', '4'],
               correct: 0,
-              explanation: '2^5 = 32. 4^2 = (2^2)^2 = 2^4 = 16. 8^3 = (2^3)^3 = 2^9 = 512.\nЧислитель: 2^5 * 2^4 = 2^9 = 512.\nРезультат: 512 / 512 = 1.'
-            },
-            {
-              id: 'm1_q2',
-              question: 'Чему равно значение: √18 + √50 - √32 ?',
-              options: ['2√2', '4√2', '3√2', '√2'],
-              correct: 1,
-              explanation: 'Раскладываем подкоренные выражения:\n√18 = √(9*2) = 3√2\n√50 = √(25*2) = 5√2\n√32 = √(16*2) = 4√2\nСкладываем: 3√2 + 5√2 - 4√2 = 4√2.'
+              explanation: '2^5 = 32. 4^2 = 16. 8^3 = 512. Числитель: 32*16 = 512. 512/512 = 1.'
             }
           ]
         },
-        {
-          id: 'math_2',
-          category: 'school',
-          title: '2. Квадратные Уравнения и Дискриминант (Kvadratické rovnice)',
-          theory: 'Квадратное уравнение ax^2 + bx + c = 0 имеет корни x = (-b ± √D) / 2a, где дискриминант D = b^2 - 4ac. Если D > 0 — два корня, D = 0 — один корень, D < 0 — корней в R нет.',
-          questions: [
-            {
-              id: 'm2_q1',
-              question: 'Найдите действительные корни уравнения: x^2 - 5x + 6 = 0',
-              options: ['x = 1, x = 6', 'x = 2, x = 3', 'x = -2, x = -3', 'x = -1, x = 5'],
-              correct: 1,
-              explanation: 'Дискриминант D = (-5)^2 - 4*1*6 = 25 - 24 = 1.\nx1 = (5 + 1)/2 = 3\nx2 = (5 - 1)/2 = 2.\nИли по теореме Виета: x1 * x2 = 6 и x1 + x2 = 5 -> корни 2 и 3.'
-            }
-          ]
-        },
-
-        // SCIO / OSP MODULES (STEP 4)
-        {
-          id: 'math_scio_1',
-          category: 'scio',
-          title: '3. Формальная Логика и Высказывания (Výroková logika)',
-          theory: 'В тестах SCIO OSP вам нужно уметь строить отрицания высказываний и определять истинность импликации (A => B). Импликация ЛОЖНА только в одном случае: когда A истинно (1), а B ложно (0).',
-          questions: [
-            {
-              id: 'ms1_q1',
-              question: 'Каково строгое логическое отрицание утверждения: "Если студент сдает экзамен, то он получает стипендию"?',
-              options: [
-                'Студент не сдает экзамен и не получает стипендию.',
-                'Студент сдает экзамен, но не получает стипендию.',
-                'Если студент не сдает экзамен, то не получает стипендию.',
-                'Студент не сдает экзамен или получает стипендию.'
-              ],
-              correct: 1,
-              explanation: 'Формула отрицания импликации: NOT(A => B) ≡ A ∧ NOT(B).\nГде A: "Студент сдает экзамен", B: "Студент получает стипендию".\nСледовательно, отрицание: "Студент сдает экзамен И НЕ получает стипендию".'
-            }
-          ]
-        },
-        {
-          id: 'math_scio_2',
-          category: 'scio',
-          title: '4. Теория Множеств и Диаграммы Венна (Množinové diagramy)',
-          theory: 'Множества — одна из главных тем SCIO OSP. Формула включений и исключений для двух множеств: |A ∪ B| = |A| + |B| - |A ∩ B|.',
-          questions: [
-            {
-              id: 'ms2_q1',
-              question: 'В группе из 30 абитуриентов FIIT 18 программируют на C, 15 знают Python, а 5 не знают ни одного из этих языков. Сколько абитуриентов знают ОБА языка?',
-              options: ['5', '8', '10', '12'],
-              correct: 1,
-              explanation: 'Всего абитуриентов, знающих хотя бы один язык: 30 - 5 = 25.\nПрименяем формулу |A ∪ B| = |A| + |B| - |A ∩ B|:\n25 = 18 + 15 - |A ∩ B| => 25 = 33 - |A ∩ B| => |A ∩ B| = 8.'
-            }
-          ]
-        },
-
-        // HIGHER MATH FIIT STU (STEP 5)
         {
           id: 'math_higher_1',
           category: 'higher',
-          title: '5. Пределы и Производные (Limity a derivácie)',
-          youtubeId: 'rAof9Ld5sOg',
-          theory: 'Предел функции lim (x->a) f(x) описывает поведение функции вблизи точки a. Производная f\'(x) задает скорость изменения функции и угол наклона касательной.',
+          title: '2. Пределы и Производные (Limity a derivácie)',
+          theory: 'Производная f\'(x) задает скорость изменения функции.',
           questions: [
             {
               id: 'mh1_q1',
               question: 'Чему равен предел: lim (x -> 0) (sin(x) / x) ?',
               options: ['0', '1', 'Бесконечность', 'Не существует'],
               correct: 1,
-              explanation: 'Замечательный предел: lim (x->0) sin(x)/x = 1. Это фундаментальная теорема высшей математики 1 курса.'
+              explanation: 'Замечательный предел lim (x->0) sin(x)/x = 1.'
+            }
+          ]
+        }
+      ],
+
+      cybersecurity: [
+        {
+          id: 'cyber_1',
+          title: '1. Сетевая модель OSI vs TCP/IP (7 vrstiev OSI)',
+          theoryHTML: `
+            <div class="theory-box">
+              <h4>📚 Глубокий разбор: 7 Уровней Модели OSI</h4>
+              <p>Модель <b>OSI (Open Systems Interconnection)</b> описывает, как данные передаются от приложения на одном компьютере через физические провода/эфир к приложению на другом компьютере.</p>
+              
+              <table class="cheat-sheet-table">
+                <thead>
+                  <tr>
+                    <th>№</th>
+                    <th>Уровень (Layer)</th>
+                    <th>Единица данных (PDU)</th>
+                    <th>Протоколы / Оборудование</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>7</td><td><b>Application (Прикладной)</b></td><td>Data (Данные)</td><td>HTTP, HTTPS, SSH, DNS, FTP, SMTP</td></tr>
+                  <tr><td>6</td><td><b>Presentation (Представительский)</b></td><td>Data (Данные)</td><td>SSL/TLS, ASCII, JPEG, PNG (Шифрование, сжатие)</td></tr>
+                  <tr><td>5</td><td><b>Session (Сеансовый)</b></td><td>Data (Данные)</td><td>NetBIOS, RPC, SOCKS (Управление сессиями)</td></tr>
+                  <tr><td>4</td><td><b>Transport (Транспортный)</b></td><td><b>Segment</b> (TCP) / Datagram (UDP)</td><td>TCP (надежный), UDP (быстрый), Порты (80, 443, 22)</td></tr>
+                  <tr><td>3</td><td><b>Network (Сетевой)</b></td><td><b>Packet</b> (Пакет)</td><td>IP (IPv4/IPv6), ICMP (ping), Routers (Маршрутизаторы)</td></tr>
+                  <tr><td>2</td><td><b>Data Link (Канальный)</b></td><td><b>Frame</b> (Кадр)</td><td>Ethernet, Wi-Fi, MAC-адреса, Switches (Коммутаторы)</td></tr>
+                  <tr><td>1</td><td><b>Physical (Физический)</b></td><td><b>Bit</b> (Биты: 0 и 1)</td><td>Кабели (UTP, Оптоволокно), Hubs, Электрические сигналы</td></tr>
+                </tbody>
+              </table>
+
+              <p><b>🔑 Что нужно запомнить для экзамена FIIT STU:</b> Коммутатор (Switch Layer 2) работает с MAC-адресами и кадрами (Frames). Маршрутизатор (Router Layer 3) работает с IP-адресами и пакетами (Packets).</p>
+            </div>
+          `,
+          questions: [
+            {
+              id: 'c1_q1',
+              question: 'На каком уровне модели OSI работает сетевой коммутатор (Switch) и с какими единицами данных (PDU) он оперирует?',
+              options: [
+                'Уровень 3 (Network) — Пакеты (Packets)',
+                'Уровень 2 (Data Link) — Кадры (Frames)',
+                'Уровень 4 (Transport) — Сегменты (Segments)',
+                'Уровень 1 (Physical) — Биты (Bits)'
+              ],
+              correct: 1,
+              explanation: 'Сетевой коммутатор (L2 Switch) работает на 2-м уровне OSI (Data Link). Он анализирует MAC-адреса получателя и передает Кадры (Frames).'
             },
             {
-              id: 'mh1_q2',
-              question: 'Найдите производную функции f(x) = 3x^2 + 5x - 4 в точке x = 2.',
-              options: ['12', '17', '11', '6'],
+              id: 'c1_q2',
+              question: 'Чем фундаментально отличается протокол TCP от UDP?',
+              options: [
+                'TCP передает данные быстрее UDP, но не проверяет ошибки.',
+                'TCP установит соединение (3-way handshake) и гарантирует доставку пакетов, а UDP отправляет данные без подтверждения.',
+                'UDP шифрует данные, а TCP передает открытый текст.',
+                'TCP работает на сетевом уровне, а UDP на прикладном.'
+              ],
               correct: 1,
-              explanation: 'Производная f\'(x) = d/dx (3x^2 + 5x - 4) = 6x + 5.\nПодставляем x = 2: f\'(2) = 6(2) + 5 = 12 + 5 = 17.'
+              explanation: 'TCP (Transmission Control Protocol) гарантирует доставку и порядок пакетов (использует SYN, SYN-ACK, ACK). UDP работает без установки соединения (connectionless) и идеально подходит для видеостриминга и онлайн-игр.'
             }
           ]
         },
         {
-          id: 'math_higher_2',
-          category: 'higher',
-          title: '6. Линейная Алгебра: Матрицы и Определители (Matice)',
-          youtubeId: 'fNk_zzaMoSs',
-          theory: 'Матрицы используются в компьютерной графике, машиностроении и криптографии. Определитель (детерминант) матрицы 2x2: det([a b; c d]) = ad - bc.',
+          id: 'cyber_2',
+          title: '2. IP-адресация, CIDR и Маски подсетей (IP adresácia a podsiete)',
+          theoryHTML: `
+            <div class="theory-box">
+              <h4>🧠 Шпаргалка по расчёту подсетей IPv4 & CIDR</h4>
+              <p>IPv4 состоит из 32 бит (4 октета по 8 бит). Запись <b>CIDR</b> (например, <code>192.168.1.0/24</code>) показывает, сколько бит отведено под адрес сети.</p>
+              
+              <p><b>Формулы расчета подсети:</b></p>
+              <ul>
+                <li>Количество бит под хосты: <code>h = 32 - Prefix</code></li>
+                <li>Всего IP-адресов в подсети: <code>2^h</code></li>
+                <li>Доступно для устройств (хостов): <code>2^h - 2</code> (минус адрес сети и бродкаст)</li>
+              </ul>
+
+              <table class="cheat-sheet-table" style="margin-top:1rem;">
+                <thead>
+                  <tr><th>Маска (CIDR)</th><th>Десятичная маска</th><th>Всего IP</th><th>Полезных хостов</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>/24</td><td>255.255.255.0</td><td>256</td><td><b>254</b></td></tr>
+                  <tr><td>/25</td><td>255.255.255.128</td><td>128</td><td><b>126</b></td></tr>
+                  <tr><td>/26</td><td>255.255.255.192</td><td>64</td><td><b>62</b></td></tr>
+                  <tr><td>/30</td><td>255.255.255.252</td><td>4</td><td><b>2</b> (Точка-Точка)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          `,
           questions: [
             {
-              id: 'mh2_q1',
-              question: 'Вычислите определитель матрицы A = [[4, 2], [3, 5]]',
-              options: ['14', '20', '26', '12'],
-              correct: 0,
-              explanation: 'det(A) = (4 * 5) - (2 * 3) = 20 - 6 = 14.'
+              id: 'c2_q1',
+              question: 'Сколько полезных IP-адресов для компьютеров доступно в подсети с маской 192.168.10.0/26 ?',
+              options: ['64', '62', '126', '254'],
+              correct: 1,
+              explanation: 'Маска /26 оставляет под хосты h = 32 - 26 = 6 бит.\nВсего IP-адресов: 2^6 = 64.\nМинус 1 (сетевой адрес) и минус 1 (широковещательный/broadcast) = 62 полезных хоста.'
+            },
+            {
+              id: 'c2_q2',
+              question: 'Какой из следующих IP-адресов относится к диапазону Частных (Private) адресов, не маршрутизируемых в глобальном Интернете?',
+              options: ['8.8.8.8', '172.16.5.20', '200.100.10.1', '1.1.1.1'],
+              correct: 1,
+              explanation: 'Диапазоны приватных IP (RFC 1918):\n1) 10.0.0.0 – 10.255.255.255 (/8)\n2) 172.16.0.0 – 172.31.255.255 (/12)\n3) 192.168.0.0 – 192.168.255.255 (/16).\nАдрес 172.16.5.20 входит во 2-й приватный диапазон.'
             }
           ]
         }
@@ -949,6 +976,7 @@
         };
         saveState();
         renderMathLessons();
+        renderCyberLessons();
         logSystem('Прогресс сброшен.');
       }
     }
@@ -970,7 +998,7 @@
       saveState();
     }
 
-    // UI UPDATER
+    // UI UPDATER ENGINE
     function updateUI() {
       const u = DATABASE.user;
 
@@ -984,13 +1012,18 @@
       document.getElementById('level-progress-text').textContent = `${currentXP} / 200 XP`;
       document.getElementById('level-bar-fill').style.width = `${(currentXP / 200) * 100}%`;
 
-      // Math Subject Progress Calculation
-      const totalMathLessons = DATABASE.math.length;
-      const completedMath = DATABASE.math.filter(l => u.completedLessons.includes(l.id)).length;
-      const mathPercent = totalMathLessons > 0 ? Math.round((completedMath / totalMathLessons) * 100) : 0;
-      
-      document.getElementById('prog-math-text').textContent = `${mathPercent}%`;
-      document.getElementById('prog-math-bar').style.width = `${mathPercent}%`;
+      // Subject Progress Bars
+      const mathLessons = DATABASE.math.length;
+      const mathDone = DATABASE.math.filter(l => u.completedLessons.includes(l.id)).length;
+      const mathPct = mathLessons > 0 ? Math.round((mathDone / mathLessons) * 100) : 0;
+      document.getElementById('prog-math-text').textContent = `${mathPct}%`;
+      document.getElementById('prog-math-bar').style.width = `${mathPct}%`;
+
+      const cyberLessons = DATABASE.cybersecurity.length;
+      const cyberDone = DATABASE.cybersecurity.filter(l => u.completedLessons.includes(l.id)).length;
+      const cyberPct = cyberLessons > 0 ? Math.round((cyberDone / cyberLessons) * 100) : 0;
+      document.getElementById('prog-cyber-text').textContent = `${cyberPct}%`;
+      document.getElementById('prog-cyber-bar').style.width = `${cyberPct}%`;
 
       const jsonPre = document.getElementById('json-preview');
       if (jsonPre) jsonPre.textContent = JSON.stringify(u, null, 2);
@@ -1004,7 +1037,7 @@
       renderMathLessons();
     }
 
-    // RENDER MATH LESSONS (ALL CATEGORIES + VIDEO & NOTES)
+    // RENDER MATH LESSONS
     function renderMathLessons() {
       const container = document.getElementById('math-lessons-container');
       if (!container) return;
@@ -1012,31 +1045,11 @@
 
       const filtered = DATABASE.math.filter(l => currentMathFilter === 'all' || l.category === currentMathFilter);
 
-      filtered.forEach((lesson, lIdx) => {
+      filtered.forEach((lesson) => {
         const isCompleted = DATABASE.user.completedLessons.includes(lesson.id);
         const card = document.createElement('div');
         card.className = 'card math-lesson-card';
 
-        // Video Player HTML if available
-        let videoHTML = '';
-        if (lesson.youtubeId) {
-          videoHTML = `
-            <div class="video-container">
-              <iframe src="https://www.youtube.com/embed/${lesson.youtubeId}" allowfullscreen></iframe>
-            </div>
-          `;
-        }
-
-        // Notes HTML
-        const existingNote = (DATABASE.user.notes && DATABASE.user.notes[lesson.id]) || '';
-        let notesHTML = `
-          <div style="margin-top:1rem;">
-            <label style="font-size:0.8rem; color:var(--text-muted);">📝 Записник конспекта по лекции (автосохранение):</label>
-            <textarea class="notes-box" placeholder="Запишите сюда формулы или заметки..." oninput="saveNote('${lesson.id}', this.value)">${existingNote}</textarea>
-          </div>
-        `;
-
-        // Quiz HTML
         let quizHTML = '';
         lesson.questions.forEach((q, qIdx) => {
           quizHTML += `
@@ -1044,7 +1057,7 @@
               <div class="quiz-question">${qIdx + 1}. ${q.question}</div>
               <div class="quiz-options">
                 ${q.options.map((opt, oIdx) => `
-                  <button class="quiz-opt-btn" onclick="checkAnswer('${lesson.id}', ${qIdx},${oIdx})">
+                  <button class="quiz-opt-btn" onclick="checkAnswer('math', '${lesson.id}', ${qIdx},${oIdx})">
                     ${String.fromCharCode(65 + oIdx)})${opt}
                   </button>
                 `).join('')}
@@ -1057,37 +1070,73 @@
           `;
         });
 
-        let badgeClass = 'badge-green';
-        let categoryLabel = 'Школьный базис';
-        if (lesson.category === 'scio') {
-          badgeClass = 'badge-purple';
-          categoryLabel = 'SCIO / OSP';
-        } else if (lesson.category === 'higher') {
-          badgeClass = 'badge-cyan';
-          categoryLabel = 'Высшая математика 1 курс';
-        }
-
         card.innerHTML = `
           <div class="card-header">
-            <div>
-              <span class="badge ${badgeClass}" style="margin-right:0.5rem;">${categoryLabel}</span>
-              <h3 style="display:inline;">${lesson.title}</h3>
-            </div>
+            <h3>${lesson.title}</h3>
             ${isCompleted ? '<span class="badge badge-green">✓ Пройдено</span>' : '<span class="badge">В процессе</span>'}
           </div>
-          <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1rem; line-height:1.5;">${lesson.theory}</p>
-          ${videoHTML}
-          ${notesHTML}
+          <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:1rem;">${lesson.theory}</p>
           ${quizHTML}
         `;
-
         container.appendChild(card);
       });
     }
 
-    // CHECK QUIZ ANSWER LOGIC
-    function checkAnswer(lessonId, qIdx, selectedOpt) {
-      const lesson = DATABASE.math.find(l => l.id === lessonId);
+    // RENDER CYBERSECURITY LESSONS WITH DEEP THEORY
+    function renderCyberLessons() {
+      const container = document.getElementById('cyber-lessons-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      DATABASE.cybersecurity.forEach((lesson) => {
+        const isCompleted = DATABASE.user.completedLessons.includes(lesson.id);
+        const card = document.createElement('div');
+        card.className = 'card math-lesson-card';
+
+        const existingNote = (DATABASE.user.notes && DATABASE.user.notes[lesson.id]) || '';
+
+        let quizHTML = '';
+        lesson.questions.forEach((q, qIdx) => {
+          quizHTML += `
+            <div class="quiz-container" id="quiz-${lesson.id}-${qIdx}">
+              <div class="quiz-question">${qIdx + 1}. ${q.question}</div>
+              <div class="quiz-options">
+                ${q.options.map((opt, oIdx) => `
+                  <button class="quiz-opt-btn" onclick="checkAnswer('cybersecurity', '${lesson.id}', ${qIdx},${oIdx})">
+                    ${String.fromCharCode(65 + oIdx)})${opt}
+                  </button>
+                `).join('')}
+              </div>
+              <div class="ai-feedback-box" id="feedback-${lesson.id}-${qIdx}">
+                <div class="ai-feedback-title">🤖 AI Tutor Explanation</div>
+                <div class="ai-feedback-text">${q.explanation.replace(/\n/g, '<br>')}</div>
+              </div>
+            </div>
+          `;
+        });
+
+        card.innerHTML = `
+          <div class="card-header">
+            <div>
+              <span class="badge badge-yellow" style="margin-right:0.5rem;">Počítačové siete</span>
+              <h3 style="display:inline;">${lesson.title}</h3>
+            </div>
+            ${isCompleted ? '<span class="badge badge-green">✓ Пройдено</span>' : '<span class="badge">В процессе</span>'}
+          </div>
+          ${lesson.theoryHTML}
+          <div style="margin-top:1rem;">
+            <label style="font-size:0.8rem; color:var(--text-muted);">📝 Ваши заметки по теме (автосохранение):</label>
+            <textarea class="notes-box" placeholder="Запишите сюда термины..." oninput="saveNote('${lesson.id}', this.value)">${existingNote}</textarea>
+          </div>
+          ${quizHTML}
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // CHECK QUIZ ANSWER LOGIC (UNIVERSAL FOR ALL SUBJECTS)
+    function checkAnswer(subjectKey, lessonId, qIdx, selectedOpt) {
+      const lesson = DATABASE[subjectKey].find(l => l.id === lessonId);
       const question = lesson.questions[qIdx];
       const quizBox = document.getElementById(`quiz-${lessonId}-${qIdx}`);
       const feedbackBox = document.getElementById(`feedback-${lessonId}-${qIdx}`);
@@ -1101,7 +1150,7 @@
         buttons.forEach(btn => btn.style.pointerEvents = 'none');
         
         feedbackBox.style.display = 'none';
-        addXP(25, `Верный ответ в теме: ${lesson.title}`);
+        addXP(25, `Верный ответ: ${lesson.title}`);
 
         if (!DATABASE.user.completedLessons.includes(lessonId)) {
           DATABASE.user.completedLessons.push(lessonId);
@@ -1113,12 +1162,14 @@
         buttons.forEach(btn => btn.style.pointerEvents = 'none');
 
         feedbackBox.style.display = 'block';
-        logSystem(`Ошибка в задаче. Разбор ИИ активирован.`);
+        logSystem(`Ошибка в тесте по сети. Разбор ИИ активирован.`);
       }
 
       DATABASE.user.accuracy = Math.round((DATABASE.user.correctQuestionsAnswered / DATABASE.user.totalQuestionsAnswered) * 100);
       saveState();
-      renderMathLessons();
+      
+      if (subjectKey === 'math') renderMathLessons();
+      if (subjectKey === 'cybersecurity') renderCyberLessons();
     }
 
     // SPA TAB ROUTER
@@ -1189,6 +1240,7 @@
       renderHeatmap();
       loadState();
       renderMathLessons();
+      renderCyberLessons();
     });
   </script>
 </body>
