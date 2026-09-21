@@ -191,6 +191,12 @@
       font-weight: 600;
     }
 
+    .badge-green {
+      background: rgba(16, 185, 129, 0.2);
+      color: var(--accent-green);
+      border-color: var(--accent-green);
+    }
+
     /* GRID LAYOUTS */
     .grid-4 {
       display: grid;
@@ -239,6 +245,34 @@
       font-family: var(--font-mono);
     }
 
+    /* LEVEL PROGRESS BAR */
+    .level-bar-container {
+      margin-top: 0.5rem;
+    }
+
+    .level-bar-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+      font-family: var(--font-mono);
+    }
+
+    .level-bar {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .level-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
     /* POMODORO TIMER */
     .timer-display {
       font-size: 3rem;
@@ -254,6 +288,7 @@
       display: flex;
       gap: 0.5rem;
       justify-content: center;
+      flex-wrap: wrap;
     }
 
     .btn {
@@ -282,6 +317,16 @@
     .btn-primary:hover {
       background: #2563eb;
       box-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+    }
+
+    .btn-danger {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #f87171;
+    }
+
+    .btn-danger:hover {
+      background: rgba(239, 68, 68, 0.3);
     }
 
     /* HEATMAP GRID */
@@ -336,6 +381,37 @@
       transition: width 0.5s ease;
     }
 
+    /* LOG CONSOLE / NOTIFICATION */
+    .log-box {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-cyan);
+      max-height: 140px;
+      overflow-y: auto;
+      margin-top: 1rem;
+    }
+
+    .log-entry {
+      margin-bottom: 0.35rem;
+      opacity: 0.9;
+    }
+
+    /* CODE & JSON PREVIEW */
+    pre {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--accent-green);
+      overflow-x: auto;
+    }
+
     /* MOBILE RESPONSIVE */
     @media (max-width: 900px) {
       .sidebar { transform: translateX(-100%); }
@@ -379,31 +455,65 @@
             <h1 class="banner-title">NEXUS ELITE // Dashboard</h1>
             <p class="banner-subtitle">Целевой факультет: FIIT STU (Slovenská technická univerzita v Bratislave)</p>
           </div>
-          <span class="badge">STEP 1 / 15 ONLINE</span>
+          <span class="badge badge-green">STATE ENGINE ONLINE (STEP 2/15)</span>
         </div>
 
         <!-- STATS ROW -->
         <div class="grid-4">
           <div class="card">
-            <div class="card-title">Общий XP</div>
+            <div class="card-header">
+              <span class="card-title">Общий XP</span>
+              <span id="level-badge" class="badge">Level 1</span>
+            </div>
             <div class="card-value" id="stat-xp">0</div>
+            <div class="level-bar-container">
+              <div class="level-bar-info">
+                <span>Прогресс уровня</span>
+                <span id="level-progress-text">0 / 200 XP</span>
+              </div>
+              <div class="level-bar"><div class="level-bar-fill" id="level-bar-fill"></div></div>
+            </div>
           </div>
           <div class="card">
             <div class="card-title">Пройдено уроков</div>
             <div class="card-value" id="stat-lessons">0</div>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">Всего разделов: 15</p>
           </div>
           <div class="card">
             <div class="card-title">Точность ответов</div>
             <div class="card-value" id="stat-accuracy">0%</div>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">На основе тестов</p>
           </div>
           <div class="card">
             <div class="card-title">Streak (Дней)</div>
             <div class="card-value" id="stat-streak" style="color: #f59e0b;">🔥 1</div>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">Не пропускай дни!</p>
           </div>
         </div>
 
-        <!-- POMODORO & PROGRESS -->
+        <!-- STATE ENGINE TEST CONTROLS & POMODORO -->
         <div class="grid-2">
+          <!-- STATE ENGINE INTERACTIVE CONTROL -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">⚡ Тестирование State Engine</span>
+              <span class="badge">Step 2 Test</span>
+            </div>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom: 1rem;">
+              Проверь работу сохранения опыта и прогресса в localStorage:
+            </p>
+            <div class="btn-group" style="justify-content: flex-start; margin-bottom: 1rem;">
+              <button class="btn btn-primary" onclick="addXP(50, 'Тестовая награда')">+50 XP</button>
+              <button class="btn btn-primary" onclick="addXP(150, 'Завершение раздела')">+150 XP</button>
+              <button class="btn" onclick="simulateCompletedLesson()">+1 Урок</button>
+              <button class="btn btn-danger" onclick="resetState()">Сброс</button>
+            </div>
+            <div class="log-box" id="system-log">
+              <div class="log-entry">[SYSTEM]: State Engine инициализирован успешно.</div>
+            </div>
+          </div>
+
+          <!-- POMODORO TIMER -->
           <div class="card">
             <div class="card-header">
               <span class="card-title">⏱️ Pomodoro Focus Timer</span>
@@ -416,27 +526,28 @@
               <button class="btn" onclick="resetTimer()">Сброс</button>
             </div>
           </div>
+        </div>
 
-          <div class="card">
-            <div class="card-header">
-              <span class="card-title">📈 Прогресс по предметам</span>
-            </div>
-            <div class="progress-item">
-              <div class="progress-label"><span>Математика & SCIO</span><span id="prog-math-text">0%</span></div>
-              <div class="progress-bar"><div class="progress-fill" id="prog-math-bar"></div></div>
-            </div>
-            <div class="progress-item">
-              <div class="progress-label"><span>Кибербезопасность & CLI</span><span id="prog-cyber-text">0%</span></div>
-              <div class="progress-bar"><div class="progress-fill" id="prog-cyber-bar"></div></div>
-            </div>
-            <div class="progress-item">
-              <div class="progress-label"><span>Язык C (Основы)</span><span id="prog-c-text">0%</span></div>
-              <div class="progress-bar"><div class="progress-fill" id="prog-c-bar"></div></div>
-            </div>
-            <div class="progress-item">
-              <div class="progress-label"><span>Словацкий язык</span><span id="prog-slovak-text">0%</span></div>
-              <div class="progress-bar"><div class="progress-fill" id="prog-slovak-bar"></div></div>
-            </div>
+        <!-- PROGRESS BY SUBJECT -->
+        <div class="card" style="margin-bottom: 2rem;">
+          <div class="card-header">
+            <span class="card-title">📈 Прогресс по предметам</span>
+          </div>
+          <div class="progress-item">
+            <div class="progress-label"><span>Математика & SCIO</span><span id="prog-math-text">0%</span></div>
+            <div class="progress-bar"><div class="progress-fill" id="prog-math-bar"></div></div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-label"><span>Кибербезопасность & CLI</span><span id="prog-cyber-text">0%</span></div>
+            <div class="progress-bar"><div class="progress-fill" id="prog-cyber-bar"></div></div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-label"><span>Язык C (Основы)</span><span id="prog-c-text">0%</span></div>
+            <div class="progress-bar"><div class="progress-fill" id="prog-c-bar"></div></div>
+          </div>
+          <div class="progress-item">
+            <div class="progress-label"><span>Словацкий язык</span><span id="prog-slovak-text">0%</span></div>
+            <div class="progress-bar"><div class="progress-fill" id="prog-slovak-bar"></div></div>
           </div>
         </div>
 
@@ -451,32 +562,173 @@
         </div>
       </section>
 
-      <!-- TAB SECTIONS READY FOR STEPS 2-15 -->
-      <section id="math" class="tab-content"><div class="card"><h2>📐 Математика (SCIO & 1 курс)</h2><p style="color:var(--text-muted); margin-top:0.5rem;">Модуль разрабатывается на Шагах 3, 4 и 5.</p></div></section>
+      <!-- TAB SECTIONS READY FOR STEPS 3-15 -->
+      <section id="math" class="tab-content"><div class="card"><h2>📐 Математика (SCIO & 1 курс)</h2><p style="color:var(--text-muted); margin-top:0.5rem;">Разработка с Шага 3 (Школьная база, тесты и SCIO).</p></div></section>
       <section id="cyber" class="tab-content"><div class="card"><h2>🛡️ Кибербезопасность & CLI</h2><p style="color:var(--text-muted); margin-top:0.5rem;">Модуль разрабатывается на Шагах 6, 7 и 8.</p></div></section>
       <section id="c-lang" class="tab-content"><div class="card"><h2>💻 Язык C (C Programming)</h2><p style="color:var(--text-muted); margin-top:0.5rem;">Модуль разрабатывается на Шагах 9 и 10.</p></div></section>
       <section id="slovak" class="tab-content"><div class="card"><h2>🇸🇰 Словацкий язык & Голос</h2><p style="color:var(--text-muted); margin-top:0.5rem;">Модуль разрабатывается на Шагах 11 и 12.</p></div></section>
       <section id="ai-tutor" class="tab-content"><div class="card"><h2>🤖 AI-Тьютор (Gemini API)</h2><p style="color:var(--text-muted); margin-top:0.5rem;">Модуль разрабатывается на Шаге 13.</p></div></section>
       <section id="exam" class="tab-content"><div class="card"><h2>🏆 Симулятор Экзамена</h2><p style="color:var(--text-muted); margin-top:0.5rem;">Модуль разрабатывается на Шаге 14.</p></div></section>
-      <section id="settings" class="tab-content"><div class="card"><h2>⚙️ Настройки</h2><p style="color:var(--text-muted); margin-top:0.5rem;">Управление прогрессом и API-ключами.</p></div></section>
+      
+      <!-- SETTINGS TAB (STEP 2 FUNCTIONAL) -->
+      <section id="settings" class="tab-content">
+        <div class="card">
+          <h2>⚙️ Настройки & Данные Сохранения</h2>
+          <p style="color:var(--text-muted); margin: 0.5rem 0 1.5rem 0;">Управление состоянием объекта DATABASE и localStorage:</p>
+          <div style="margin-bottom: 1.5rem;">
+            <button class="btn btn-danger" onclick="resetState()">🔥 Полный сброс прогресса</button>
+          </div>
+          <h3>Текущий объект состояния (JSON):</h3>
+          <pre id="json-preview">{}</pre>
+        </div>
+      </section>
     </main>
   </div>
 
   <script>
-    // CORE GLOBAL DATABASE ARCHITECTURE
+    // CORE GLOBAL DATABASE & STATE ENGINE
+    const STATE_KEY = 'NEXUS_ELITE_STATE_V1';
+
     const DATABASE = {
       user: {
         name: "Dani Abdeh",
         xp: 0,
+        level: 1,
         streak: 1,
+        lastActiveDate: new Date().toISOString().slice(0, 10),
         completedLessons: [],
-        accuracy: 0
+        accuracy: 100,
+        totalQuestionsAnswered: 0,
+        correctQuestionsAnswered: 0
       },
       math: [],
       cybersecurity: [],
       cLanguage: [],
       slovak: []
     };
+
+    // LOGGING SYSTEM
+    function logSystem(message) {
+      const logBox = document.getElementById('system-log');
+      if (!logBox) return;
+      const entry = document.createElement('div');
+      entry.className = 'log-entry';
+      const time = new Date().toLocaleTimeString();
+      entry.textContent = `[${time}] ${message}`;
+      logBox.appendChild(entry);
+      logBox.scrollTop = logBox.scrollHeight;
+    }
+
+    // STATE ENGINE FUNCTIONS
+    function saveState() {
+      try {
+        localStorage.setItem(STATE_KEY, JSON.stringify(DATABASE.user));
+        updateUI();
+        logSystem('Состояние успешно сохранено в localStorage.');
+      } catch (e) {
+        console.error('Ошибка сохранения:', e);
+      }
+    }
+
+    function loadState() {
+      const saved = localStorage.getItem(STATE_KEY);
+      if (saved) {
+        try {
+          DATABASE.user = JSON.parse(saved);
+          checkStreak();
+          logSystem('Данные пользователя загружены из localStorage.');
+        } catch (e) {
+          console.error('Ошибка загрузки данных:', e);
+        }
+      } else {
+        saveState();
+      }
+      updateUI();
+    }
+
+    function resetState() {
+      if (confirm('Вы уверены, что хотите полностью сбросить весь прогресс?')) {
+        localStorage.removeItem(STATE_KEY);
+        DATABASE.user = {
+          name: "Dani Abdeh",
+          xp: 0,
+          level: 1,
+          streak: 1,
+          lastActiveDate: new Date().toISOString().slice(0, 10),
+          completedLessons: [],
+          accuracy: 100,
+          totalQuestionsAnswered: 0,
+          correctQuestionsAnswered: 0
+        };
+        saveState();
+        logSystem('Сброс состояния выполнен.');
+      }
+    }
+
+    // STREAK CALCULATOR ENGINE
+    function checkStreak() {
+      const today = new Date().toISOString().slice(0, 10);
+      const last = DATABASE.user.lastActiveDate;
+
+      if (last !== today) {
+        const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+        if (last === yesterday) {
+          DATABASE.user.streak += 1;
+        } else {
+          DATABASE.user.streak = 1;
+        }
+        DATABASE.user.lastActiveDate = today;
+        saveState();
+      }
+    }
+
+    // XP & LEVEL ENGINE
+    function addXP(amount, reason = '') {
+      DATABASE.user.xp += amount;
+      
+      // Calculate level based on XP formula: Level = floor(XP / 200) + 1
+      const newLevel = Math.floor(DATABASE.user.xp / 200) + 1;
+      if (newLevel > DATABASE.user.level) {
+        DATABASE.user.level = newLevel;
+        logSystem(`🎉 ПОЗДРАВЛЯЕМ! Достигнут Level ${newLevel}!`);
+        alert(`🎉 ПОЗДРАВЛЯЕМ! Вы достигли Level ${newLevel}!`);
+      }
+
+      if (reason) {
+        logSystem(`Получено +${amount} XP (${reason}).`);
+      }
+      saveState();
+    }
+
+    function simulateCompletedLesson() {
+      const lessonId = `lesson_${Date.now()}`;
+      DATABASE.user.completedLessons.push(lessonId);
+      addXP(100, 'Завершение урока');
+    }
+
+    // UI UPDATER ENGINE
+    function updateUI() {
+      const u = DATABASE.user;
+
+      // Stats Cards
+      document.getElementById('stat-xp').textContent = u.xp;
+      document.getElementById('stat-lessons').textContent = u.completedLessons.length;
+      document.getElementById('stat-accuracy').textContent = u.accuracy + '%';
+      document.getElementById('stat-streak').textContent = `🔥 ${u.streak}`;
+      document.getElementById('level-badge').textContent = `Level ${u.level}`;
+
+      // Level Progress Bar
+      const currentLevelXP = u.xp % 200;
+      const fillPercentage = Math.min((currentLevelXP / 200) * 100, 100);
+      document.getElementById('level-progress-text').textContent = `${currentLevelXP} / 200 XP`;
+      document.getElementById('level-bar-fill').style.width = `${fillPercentage}%`;
+
+      // JSON Preview in Settings
+      const jsonPre = document.getElementById('json-preview');
+      if (jsonPre) {
+        jsonPre.textContent = JSON.stringify(u, null, 2);
+      }
+    }
 
     // SPA TAB ROUTER
     function switchTab(tabId) {
@@ -494,6 +746,7 @@
     // HEATMAP GENERATOR
     function renderHeatmap() {
       const grid = document.getElementById('heatmap-grid');
+      if (!grid) return;
       grid.innerHTML = '';
       for (let i = 0; i < 364; i++) {
         const cell = document.createElement('div');
@@ -523,7 +776,8 @@
         } else {
           clearInterval(timerInterval);
           timerInterval = null;
-          alert('Помодоро окончен! Сделайте перерыв.');
+          addXP(50, 'Завершение Pomodoro сессии');
+          alert('Помодоро сессия завершена! Вы получили +50 XP!');
         }
       }, 1000);
     }
@@ -539,25 +793,10 @@
       updateTimerDisplay();
     }
 
-    // LOCALSTORAGE SYNC ENGINE
-    function saveProgress() {
-      localStorage.setItem('NEXUS_STATE', JSON.stringify(DATABASE.user));
-    }
-
-    function loadProgress() {
-      const saved = localStorage.getItem('NEXUS_STATE');
-      if (saved) {
-        DATABASE.user = JSON.parse(saved);
-        document.getElementById('stat-xp').textContent = DATABASE.user.xp;
-        document.getElementById('stat-lessons').textContent = DATABASE.user.completedLessons.length;
-        document.getElementById('stat-accuracy').textContent = DATABASE.user.accuracy + '%';
-      }
-    }
-
     // INITIALIZATION
     window.addEventListener('DOMContentLoaded', () => {
       renderHeatmap();
-      loadProgress();
+      loadState();
     });
   </script>
 </body>
