@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   
-  <!-- KATEX MATH ENGINE (Для отображения настоящих дробей, корней и матриц) -->
+  <!-- KATEX ENGINE FOR ADVANCED MATH -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
@@ -20,7 +20,7 @@
     :root {
       --bg-primary: #09090b;
       --bg-secondary: #121215;
-      --bg-card: rgba(24, 24, 27, 0.65);
+      --bg-card: rgba(24, 24, 27, 0.75);
       --border-color: #27272a;
       --border-bright: #3f3f46;
       --accent-blue: #3b82f6;
@@ -60,22 +60,17 @@
       position: fixed;
       top: 0; bottom: 0; left: 0;
       z-index: 100;
-      transition: transform 0.3s ease;
     }
 
     .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border-color);
+      display: flex; align-items: center; gap: 0.75rem;
+      padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-color);
     }
 
     .logo-icon {
       width: 38px; height: 38px;
       background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
       font-weight: 700; font-family: var(--font-mono); color: #fff;
       box-shadow: 0 0 18px rgba(59, 130, 246, 0.4);
     }
@@ -196,16 +191,57 @@
     .log-box { background: rgba(0, 0, 0, 0.4); border: 1px solid var(--border-color); border-radius: 8px; padding: 1rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-cyan); max-height: 140px; overflow-y: auto; margin-top: 1rem; }
     .log-entry { margin-bottom: 0.35rem; opacity: 0.9; }
 
+    /* NATIVE HTML MATH FRACTIONS & FORMULAS */
+    .frac {
+      display: inline-flex;
+      flex-direction: column;
+      vertical-align: middle;
+      text-align: center;
+      padding: 0 4px;
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+    .frac .top {
+      border-bottom: 2px solid var(--accent-cyan);
+      padding-bottom: 2px;
+      color: #38bdf8;
+    }
+    .frac .bottom {
+      padding-top: 2px;
+      color: #38bdf8;
+    }
+    .math-expr {
+      font-family: var(--font-mono);
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      color: #38bdf8;
+      font-size: 0.95rem;
+    }
+
     /* THEORY & CHEAT SHEET STYLES */
     .theory-box {
-      background: rgba(0, 0, 0, 0.35);
+      background: rgba(18, 18, 21, 0.85);
       border-left: 4px solid var(--accent-blue);
-      border-radius: 0 8px 8px 0;
-      padding: 1.25rem; margin: 1rem 0;
+      border-radius: 0 10px 10px 0;
+      padding: 1.5rem; margin: 1.25rem 0;
       line-height: 1.7; font-size: 0.95rem;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
     }
-    .theory-box h4 { color: var(--accent-cyan); margin-bottom: 0.6rem; font-size: 1.05rem; }
-    .theory-box p { margin-bottom: 0.75rem; }
+    .theory-box h4 { color: var(--accent-cyan); margin-bottom: 0.8rem; font-size: 1.1rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.4rem; }
+    .theory-box p { margin-bottom: 0.85rem; color: #e4e4e7; }
+    .theory-box ul { margin-left: 1.5rem; margin-bottom: 1rem; }
+    .theory-box li { margin-bottom: 0.4rem; color: #a1a1aa; }
+
+    .example-block {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 1rem 0;
+    }
+    .example-title { color: var(--accent-green); font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; }
 
     .cheat-sheet-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.88rem; }
     .cheat-sheet-table th, .cheat-sheet-table td { border: 1px solid var(--border-color); padding: 0.65rem 0.85rem; text-align: left; }
@@ -214,26 +250,39 @@
 
     /* QUIZ STYLES */
     .math-lesson-card { margin-bottom: 2rem; }
-    .quiz-container { margin-top: 1.25rem; background: rgba(0,0,0,0.3); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem; }
-    .quiz-question { font-size: 1.05rem; font-weight: 600; margin-bottom: 1rem; color: #fff; }
+    .quiz-container { margin-top: 1.25rem; background: rgba(0,0,0,0.35); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.25rem; }
+    .quiz-question { font-size: 1.05rem; font-weight: 600; margin-bottom: 1rem; color: #fff; line-height: 1.5; }
     .quiz-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.75rem; margin-bottom: 1rem; }
+    
     .quiz-opt-btn {
-      padding: 0.85rem 1rem; background: rgba(255,255,255,0.03);
+      padding: 0.9rem 1.1rem; background: rgba(255,255,255,0.03);
       border: 1px solid var(--border-color); border-radius: 8px;
       color: var(--text-main); font-size: 0.95rem; cursor: pointer;
       text-align: left; transition: all 0.2s ease;
+      display: flex; align-items: center; justify-content: space-between;
     }
-    .quiz-opt-btn:hover { background: rgba(255,255,255,0.08); border-color: var(--border-bright); }
-    .quiz-opt-btn.correct { background: rgba(16, 185, 129, 0.2) !important; border-color: var(--accent-green) !important; color: var(--accent-green) !important; font-weight: 600; }
-    .quiz-opt-btn.wrong { background: rgba(239, 68, 68, 0.2) !important; border-color: var(--accent-red) !important; color: var(--accent-red) !important; }
+    .quiz-opt-btn:hover:not([disabled]) { background: rgba(255,255,255,0.08); border-color: var(--border-bright); }
+    
+    .quiz-opt-btn.correct {
+      background: rgba(16, 185, 129, 0.25) !important;
+      border-color: var(--accent-green) !important;
+      color: #34d399 !important;
+      font-weight: 700;
+    }
+    .quiz-opt-btn.wrong {
+      background: rgba(239, 68, 68, 0.25) !important;
+      border-color: var(--accent-red) !important;
+      color: #f87171 !important;
+      font-weight: 700;
+    }
 
     .ai-feedback-box {
-      margin-top: 1rem; padding: 1rem;
+      margin-top: 1rem; padding: 1.1rem;
       background: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.1));
-      border: 1px solid var(--accent-purple); border-radius: 8px; display: none;
+      border: 1px solid var(--accent-purple); border-radius: 8px;
       animation: fadeIn 0.3s ease;
     }
-    .ai-feedback-title { font-weight: 700; color: var(--accent-purple); font-size: 0.88rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+    .ai-feedback-title { font-weight: 700; color: var(--accent-purple); font-size: 0.9rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
     .ai-feedback-text { font-size: 0.9rem; line-height: 1.6; color: var(--text-main); }
 
     .notes-box {
@@ -287,7 +336,7 @@
             <h1 class="banner-title">NEXUS ELITE // Dashboard</h1>
             <p class="banner-subtitle">Целевой факультет: FIIT STU (Slovenská technická univerzita v Bratislave)</p>
           </div>
-          <span class="badge badge-green">FULL ENGINE ONLINE</span>
+          <span class="badge badge-green">SYSTEM STATE FULLY REPAIRED</span>
         </div>
 
         <!-- STATS ROW -->
@@ -391,8 +440,8 @@
       <section id="math" class="tab-content">
         <div class="banner">
           <div>
-            <h1 class="banner-title">📐 Математика: Школа, SCIO & 1 курс FIIT</h1>
-            <p class="banner-subtitle">Полный курс с глубокой теорией, KaTeX формулами и тестами.</p>
+            <h1 class="banner-title">📐 Математика: Школа, SCIO & 1 курс FIIT STU</h1>
+            <p class="banner-subtitle">Полный учебный курс с теорией, решенными примерами, HTML-дробями и тестами.</p>
           </div>
           <span class="badge badge-cyan">MATH ACTIVE</span>
         </div>
@@ -451,6 +500,7 @@
         accuracy: 100,
         totalQuestionsAnswered: 0,
         correctQuestionsAnswered: 0,
+        answers: {}, // Stores user quiz choices persistently!
         notes: {}
       },
       math: [
@@ -462,61 +512,86 @@
           theoryHTML: `
             <div class="theory-box">
               <h4>📖 Теоретический материал: Квадратные Уравнения</h4>
-              <p>Полное квадратное уравнение имеет стандартный вид: $$ax^2 + bx + c = 0 \quad (a \neq 0)$$</p>
-              <p>Чтобы найти его корни, сначала рассчитываем <b>дискриминант ($D$)</b>:</p>
-              <p>$$D = b^2 - 4ac$$</p>
-              <p><b>Правило количества корней:</b></p>
+              <p>Полное квадратное уравнение имеет вид: <span class="math-expr">ax² + bx + c = 0</span>, где <b>a ≠ 0</b>.</p>
+              
+              <p><b>1. Вычисление Дискриминанта (D):</b></p>
+              <p><span class="math-expr">D = b² - 4ac</span></p>
+              
+              <p><b>2. Анализ корней в зависимости от D:</b></p>
               <ul>
-                <li>Если $D > 0$: Уравнение имеет два различных действительных корня: $$x_{1,2} = \\frac{-b \\pm \\sqrt{D}}{2a}$$</li>
-                <li>Если $D = 0$: Уравнение имеет один корень кратности 2: $$x = -\\frac{b}{2a}$$</li>
-                <li>Если $D < 0$: Действительных корней нет (корни являются комплексными числами).</li>
+                <li>Если <b>D > 0</b>: Два различных реальных корня. Формула: 
+                  <span class="math-expr">x₁,₂ = <div class="frac"><span class="top">-b ± √D</span><span class="bottom">2a</span></div></span>
+                </li>
+                <li>Если <b>D = 0</b>: Один корень кратности 2. Формула: 
+                  <span class="math-expr">x = <div class="frac"><span class="top">-b</span><span class="bottom">2a</span></div></span>
+                </li>
+                <li>Если <b>D < 0</b>: Уравнение не имеет действительных корней (корни комплексные).</li>
               </ul>
-              <p><b>Теорема Виета (Виетовские формулы):</b> Если $a=1$, то для уравнения $x^2 + px + q = 0$ верно: $$x_1 + x_2 = -p \quad \\text{и} \quad x_1 \\cdot x_2 = q$$</p>
+
+              <p><b>3. Теорема Виета (для приведенного уравнения x² + px + q = 0):</b></p>
+              <p><span class="math-expr">x₁ + x₂ = -p</span> и <span class="math-expr">x₁ · x₂ = q</span></p>
+
+              <div class="example-block">
+                <div class="example-title">💡 Разбор примера: x² - 5x + 6 = 0</div>
+                <p>1) a = 1, b = -5, c = 6.</p>
+                <p>2) D = (-5)² - 4(1)(6) = 25 - 24 = 1 (D > 0, 2 корня).</p>
+                <p>3) x₁,₂ = <div class="frac"><span class="top">-(-5) ± √1</span><span class="bottom">2(1)</span></div> = <div class="frac"><span class="top">5 ± 1</span><span class="bottom">2</span></div></p>
+                <p>4) x₁ = <div class="frac"><span class="top">6</span><span class="bottom">2</span></div> = 3, x₂ = <div class="frac"><span class="top">4</span><span class="bottom">2</span></div> = 2.</p>
+              </div>
             </div>
           `,
           questions: [
             {
               id: 'm1_q1',
-              question: 'Чему равны корни уравнения $x^2 - 5x + 6 = 0$ ?',
-              options: ['$x_1 = 1, x_2 = 6$', '$x_1 = 2, x_2 = 3$', '$x_1 = -2, x_2 = -3$', '$x_1 = 0, x_2 = 5$'],
+              question: 'Чему равны корни уравнения x² - 5x + 6 = 0 ?',
+              options: ['x₁ = 1, x₂ = 6', 'x₁ = 2, x₂ = 3', 'x₁ = -2, x₂ = -3', 'x₁ = 0, x₂ = 5'],
               correct: 1,
-              explanation: 'Дискриминант $D = (-5)^2 - 4(1)(6) = 25 - 24 = 1$.\nПрименяем формулу корней: $x_{1,2} = \\frac{5 \\pm \\sqrt{1}}{2} \\Rightarrow x_1 = 3, x_2 = 2$.\nПо теореме Виета: $2+3=5$ и $2 \\cdot 3 = 6$.'
+              explanation: 'Дискриминант D = (-5)² - 4(1)(6) = 25 - 24 = 1.\nКорни: x₁,₂ = (5 ± 1)/2 => x₁ = 3, x₂ = 2.\nПо теореме Виета: 2 + 3 = 5 и 2 * 3 = 6.'
             },
             {
               id: 'm1_q2',
-              question: 'При каком значении параметра $k$ уравнение $x^2 + kx + 9 = 0$ имеет ровно один корень?',
-              options: ['$k = \\pm 6$', '$k = 6$', '$k = 3$', '$k = \\pm 3$'],
+              question: 'При каком значении параметра k уравнение x² + kx + 9 = 0 имеет ровно один корень?',
+              options: ['k = ±6', 'k = 6', 'k = 3', 'k = ±3'],
               correct: 0,
-              explanation: 'Уравнение имеет 1 корень, когда дискриминант $D = 0$.\n$D = k^2 - 4(1)(9) = k^2 - 36 = 0 \\Rightarrow k^2 = 36 \\Rightarrow k = \\pm 6$.'
+              explanation: 'Уравнение имеет 1 корень, когда D = 0.\nD = k² - 4(1)(9) = k² - 36 = 0 => k² = 36 => k = ±6.'
             }
           ]
         },
         {
           id: 'math_2',
           category: 'school',
-          title: '2. Степени и Корни (Mocniny a odmocniny)',
+          title: '2. Степени, Корни и Алгебраические Дроби (Mocniny a odmocniny)',
           theoryHTML: `
             <div class="theory-box">
               <h4>📖 Теоретический материал: Действия со степенями</h4>
-              <p>Основные свойства степеней с действительным показателем:</p>
+              <p>Фундаментальные правила преобразования степенных выражений:</p>
               <table class="cheat-sheet-table">
-                <thead><tr><th>Свойство</th><th>Формула</th><th>Пример</th></tr></thead>
+                <thead><tr><th>Правило</th><th>Формула</th><th>Пример</th></tr></thead>
                 <tbody>
-                  <tr><td>Умножение степеней</td><td>$$a^m \\cdot a^n = a^{m+n}$$</td><td>$$2^3 \\cdot 2^2 = 2^5 = 32$$</td></tr>
-                  <tr><td>Деление степеней</td><td>$$\\frac{a^m}{a^n} = a^{m-n}$$</td><td>$$\\frac{2^5}{2^2} = 2^3 = 8$$</td></tr>
-                  <tr><td>Возведение в степень</td><td>$$(a^m)^n = a^{m \\cdot n}$$</td><td>$$(2^2)^3 = 2^6 = 64$$</td></tr>
-                  <tr><td>Степень с дробным показателем</td><td>$$a^{\\frac{m}{n}} = \\sqrt[n]{a^m}$$</td><td>$$8^{\\frac{2}{3}} = \\sqrt[3]{8^2} = 4$$</td></tr>
+                  <tr><td>Умножение степеней</td><td><span class="math-expr">aᵐ · aⁿ = aᵐ⁺ⁿ</span></td><td>2³ · 2² = 2⁵ = 32</td></tr>
+                  <tr><td>Деление степеней</td><td><span class="math-expr"><div class="frac"><span class="top">aᵐ</span><span class="bottom">aⁿ</span></div> = aᵐ⁻ⁿ</span></td><td><div class="frac"><span class="top">2⁵</span><span class="bottom">2²</span></div> = 2³ = 8</td></tr>
+                  <tr><td>Возведение степени в степень</td><td><span class="math-expr">(aᵐ)ⁿ = aᵐⁿ</span></td><td>(2²)³ = 2⁶ = 64</td></tr>
+                  <tr><td>Дробный показатель</td><td><span class="math-expr">aᵐ/ⁿ = ⁿ√aᵐ</span></td><td>8²/*³ = ³√8² = ³√64 = 4</td></tr>
                 </tbody>
               </table>
+
+              <div class="example-block">
+                <div class="example-title">💡 Разбор упрощения дроби: (2⁵ · 4²) / 8³</div>
+                <p>Приводим все числа к основанию 2:</p>
+                <p>• 4² = (2²)² = 2⁴</p>
+                <p>• 8³ = (2³)³ = 2⁹</p>
+                <p>• Числитель: 2⁵ · 2⁴ = 2⁵⁺⁴ = 2⁹</p>
+                <p>• Дробь: <div class="frac"><span class="top">2⁹</span><span class="bottom">2⁹</span></div> = 1.</p>
+              </div>
             </div>
           `,
           questions: [
             {
               id: 'm2_q1',
-              question: 'Упростите выражение и найдите его значение: $\\frac{2^5 \\cdot 4^2}{8^3}$',
-              options: ['$1$', '$2$', '$\\frac{1}{2}$', '$4$'],
+              question: 'Упростите выражение и найдите его значение: (2⁵ · 4²) / 8³',
+              options: ['1', '2', '1/2', '4'],
               correct: 0,
-              explanation: 'Приводим все основания к числу $2$:\n$4^2 = (2^2)^2 = 2^4$.\n$8^3 = (2^3)^3 = 2^9$.\nЧислитель: $2^5 \\cdot 2^4 = 2^9$.\nДробь: $\\frac{2^9}{2^9} = 1$.'
+              explanation: 'Приводим к основанию 2:\n4² = 2⁴, 8³ = 2⁹.\nЧислитель: 2⁵ · 2⁴ = 2⁹.\nДробь: 2⁹ / 2⁹ = 1.'
             }
           ]
         },
@@ -529,12 +604,16 @@
           theoryHTML: `
             <div class="theory-box">
               <h4>🧠 SCIO/OSP: Логика Высказываний</h4>
-              <p>Импликация $A \\Rightarrow B$ ("Если A, то B") <b>ЛОЖНА только в одном случае</b>: когда $A$ истинно ($1$), а $B$ ложно ($0$).</p>
+              <p>Импликация <span class="math-expr">A ⇒ B</span> ("Если A, то B") <b>ЛОЖНА только в одном случае</b>: когда A истинно (1), а B ложно (0).</p>
               <p><b>Формула отрицания импликации:</b></p>
-              <p>$$\\neg(A \\Rightarrow B) \\equiv A \\land \\neg B$$</p>
-              <p><i>Словесно: "A происходит, И при этом B НЕ происходит".</i></p>
+              <p><span class="math-expr">¬(A ⇒ B) ≡ A ∧ ¬B</span></p>
+              <p><i>Словесно: "Событие A происходит, И при этом событие B НЕ происходит".</i></p>
+              
               <p><b>Законы Де Моргана:</b></p>
-              <p>$$\\neg(A \\land B) \\equiv \\neg A \\lor \\neg B \quad | \quad \\neg(A \\lor B) \\equiv \\neg A \\land \\neg B$$</p>
+              <ul>
+                <li>Отрицание конъюнкции (И): <span class="math-expr">¬(A ∧ B) ≡ ¬A ∨ ¬B</span></li>
+                <li>Отрицание дизъюнкции (ИЛИ): <span class="math-expr">¬(A ∨ B) ≡ ¬A ∧ ¬B</span></li>
+              </ul>
             </div>
           `,
           questions: [
@@ -548,56 +627,62 @@
                 'Студент не сдает экзамен или получает стипендию.'
               ],
               correct: 1,
-              explanation: 'По формуле $\\neg(A \\Rightarrow B) \\equiv A \\land \\neg B$:\n$A$: "Студент сдает экзамен".\n$\\neg B$: "Студент НЕ получает стипендию".\nИтоговое отрицание: "Студент сдает экзамен, НО (И) не получает стипендию".'
+              explanation: 'Формула отрицания: ¬(A ⇒ B) ≡ A ∧ ¬B.\nA: "Студент сдает экзамен", ¬B: "Студент НЕ получает стипендию".\nРезультат: "Студент сдает экзамен И НЕ получает стипендию".'
             }
           ]
         },
 
-        // 3. HIGHER MATHEMATICS (FIIT STU 1ST YEAR)
+        // 3. HIGHER MATHEMATICS
         {
           id: 'math_higher_1',
           category: 'higher',
           title: '4. Высшая Математика: Пределы и Замечательный Предел (Limity)',
           theoryHTML: `
             <div class="theory-box">
-              <h4>🎓 1 курс FIIT STU: Теория Пределов</h4>
-              <p>Предел функции в точке описывает значение, к которому стремится $f(x)$ при приближении $x$ к $a$:</p>
-              <p>$$\\lim_{x \\to a} f(x) = L$$</p>
-              <p><b>Первый Замечательный Предел (Фундаментальная теорема):</b></p>
-              <p>$$\\lim_{x \\to 0} \\frac{\\sin x}{x} = 1$$</p>
-              <p><b>Правило Лопиталя (для неопределенностей $\\frac{0}{0}$ и $\\frac{\\infty}{\\infty}$):</b></p>
-              <p>$$\\lim_{x \\to a} \\frac{f(x)}{g(x)} = \\lim_{x \\to a} \\frac{f'(x)}{g'(x)}$$</p>
+              <h4>🎓 1 курс FIIT STU: Пределы Функций</h4>
+              <p>Предел функции в точке показывает, к какому значению стремится f(x) при x → a:</p>
+              <p><span class="math-expr">lim (x → a) f(x) = L</span></p>
+              
+              <p><b>Первый Замечательный Предел:</b></p>
+              <p><span class="math-expr">lim (x → 0) <div class="frac"><span class="top">sin(x)</span><span class="bottom">x</span></div> = 1</span></p>
+              
+              <p><b>Правило Лопиталя (раскрытие неопределенностей 0/0 и ∞/∞):</b></p>
+              <p><span class="math-expr">lim (x → a) <div class="frac"><span class="top">f(x)</span><span class="bottom">g(x)</span></div> = lim (x → a) <div class="frac"><span class="top">f'(x)</span><span class="bottom">g'(x)</span></div></span></p>
             </div>
           `,
           questions: [
             {
               id: 'mh1_q1',
-              question: 'Вычислите значение первого замечательного предела: $\\lim_{x \\to 0} \\frac{\\sin(3x)}{x}$',
-              options: ['$0$', '$1$', '$3$', 'Не существует'],
+              question: 'Вычислите предел: lim (x → 0) [sin(3x) / x]',
+              options: ['0', '1', '3', 'Не существует'],
               correct: 2,
-              explanation: 'Домножаем и делим на $3$:\n$\\lim_{x \\to 0} \\frac{\\sin(3x)}{3x} \\cdot 3 = 1 \\cdot 3 = 3$.\nИли по Правилу Лопиталя: $\\frac{d/dx(\\sin 3x)}{d/dx(x)} = \\frac{3\\cos 3x}{1} = 3\\cos(0) = 3$.'
+              explanation: 'Домножаем числитель и знаменатель на 3:\nlim (x → 0) [3 · sin(3x) / (3x)] = 3 · 1 = 3.\nИли по Лопиталю: (sin 3x)\' / (x)\' = 3 cos(3x) / 1 = 3 · 1 = 3.'
             }
           ]
         },
         {
           id: 'math_higher_2',
           category: 'higher',
-          title: '5. Матрицы и Определители 2x2 и 3x3 (Matice a determinanty)',
+          title: '5. Матрицы и Определители (Matice a determinanty)',
           theoryHTML: `
             <div class="theory-box">
-              <h4>🎓 Линейная Алгебра: Вычисление Определителей</h4>
-              <p>Определитель (Детерминант) матрицы $2 \\times 2$ рассчитывается крест-накрест:</p>
-              <p>$$\\det A = \\begin{vmatrix} a & b \\\\ c & d \\end{vmatrix} = a \\cdot d - b \\cdot c$$</p>
-              <p><b>Пример:</b> Для матрицы $A = \\begin{pmatrix} 5 & 2 \\\\ 3 & 4 \\end{pmatrix}$ детерминант равен $5 \\cdot 4 - 2 \\cdot 3 = 20 - 6 = 14$.</p>
+              <h4>🎓 Линейная Алгебра: Вычисление Определителя 2x2</h4>
+              <p>Определитель (Детерминант) матрицы A размера 2х2 вычисляется по формуле:</p>
+              <p><span class="math-expr">det(A) = |a b; c d| = a·d - b·c</span></p>
+              <div class="example-block">
+                <div class="example-title">💡 Пример вычисления:</div>
+                <p>Пусть A = [[4, 2], [3, 5]].</p>
+                <p>det(A) = (4 · 5) - (2 · 3) = 20 - 6 = 14.</p>
+              </div>
             </div>
           `,
           questions: [
             {
               id: 'mh2_q1',
-              question: 'Чему равен определитель матрицы $A = \\begin{pmatrix} 4 & 2 \\\\ 3 & 5 \\end{pmatrix}$ ?',
-              options: ['$14$', '$20$', '$26$', '$12$'],
+              question: 'Чему равен определитель матрицы A = [[4, 2], [3, 5]] ?',
+              options: ['14', '20', '26', '12'],
               correct: 0,
-              explanation: 'Применяем формулу $ad - bc$:\n$\\det A = (4 \\cdot 5) - (2 \\cdot 3) = 20 - 6 = 14$.'
+              explanation: 'det(A) = (4 · 5) - (2 · 3) = 20 - 6 = 14.'
             }
           ]
         }
@@ -670,6 +755,7 @@
         try {
           const parsed = JSON.parse(saved);
           DATABASE.user = { ...DATABASE.user, ...parsed };
+          if (!DATABASE.user.answers) DATABASE.user.answers = {};
         } catch (e) { console.error('Load error', e); }
       }
       updateUI();
@@ -682,7 +768,8 @@
           name: "Dani Abdeh", xp: 0, level: 1, streak: 1,
           lastActiveDate: new Date().toISOString().slice(0, 10),
           completedLessons: [], accuracy: 100,
-          totalQuestionsAnswered: 0, correctQuestionsAnswered: 0, notes: {}
+          totalQuestionsAnswered: 0, correctQuestionsAnswered: 0,
+          answers: {}, notes: {}
         };
         saveState();
         renderMathLessons();
@@ -756,6 +843,7 @@
       }
     }
 
+    // RENDER MATH LESSONS WITH FULL PERSISTENT QUIZ ANSWERS
     function renderMathLessons() {
       const container = document.getElementById('math-lessons-container');
       if (!container) return;
@@ -772,17 +860,30 @@
 
         let quizHTML = '';
         lesson.questions.forEach((q, qIdx) => {
+          const qKey = `${lesson.id}_${qIdx}`;
+          const savedAnswer = DATABASE.user.answers ? DATABASE.user.answers[qKey] : undefined;
+          const isAnswered = savedAnswer !== undefined;
+
           quizHTML += `
             <div class="quiz-container" id="quiz-${lesson.id}-${qIdx}">
               <div class="quiz-question">${qIdx + 1}. ${q.question}</div>
               <div class="quiz-options">
-                ${q.options.map((opt, oIdx) => `
-                  <button class="quiz-opt-btn" onclick="checkAnswer('math', '${lesson.id}', ${qIdx},${oIdx})">
-                    ${String.fromCharCode(65 + oIdx)})${opt}
-                  </button>
-                `).join('')}
+                ${q.options.map((opt, oIdx) => {
+                  let btnClass = 'quiz-opt-btn';
+                  if (isAnswered) {
+                    if (oIdx === q.correct) btnClass += ' correct';
+                    else if (oIdx === savedAnswer) btnClass += ' wrong';
+                  }
+                  const disabledAttr = isAnswered ? 'disabled style="pointer-events:none;"' : '';
+                  return `
+                    <button class="${btnClass}" ${disabledAttr} onclick="checkAnswer('math', '${lesson.id}', ${qIdx},${oIdx})">
+                      <span>${String.fromCharCode(65 + oIdx)}) ${opt}</span>${isAnswered && oIdx === q.correct ? '<span>✓</span>' : ''}
+                      ${isAnswered && oIdx === savedAnswer && oIdx !== q.correct ? '<span>✗</span>' : ''}
+                    </button>
+                  `;
+                }).join('')}
               </div>
-              <div class="ai-feedback-box" id="feedback-${lesson.id}-${qIdx}">
+              <div class="ai-feedback-box" style="display: ${isAnswered ? 'block' : 'none'};">
                 <div class="ai-feedback-title">🤖 AI Tutor Explanation</div>
                 <div class="ai-feedback-text">${q.explanation.replace(/\n/g, '<br>')}</div>
               </div>
@@ -808,6 +909,7 @@
       setTimeout(triggerKaTeX, 50);
     }
 
+    // RENDER CYBERSECURITY LESSONS
     function renderCyberLessons() {
       const container = document.getElementById('cyber-lessons-container');
       if (!container) return;
@@ -822,17 +924,30 @@
 
         let quizHTML = '';
         lesson.questions.forEach((q, qIdx) => {
+          const qKey = `${lesson.id}_${qIdx}`;
+          const savedAnswer = DATABASE.user.answers ? DATABASE.user.answers[qKey] : undefined;
+          const isAnswered = savedAnswer !== undefined;
+
           quizHTML += `
             <div class="quiz-container" id="quiz-${lesson.id}-${qIdx}">
               <div class="quiz-question">${qIdx + 1}. ${q.question}</div>
               <div class="quiz-options">
-                ${q.options.map((opt, oIdx) => `
-                  <button class="quiz-opt-btn" onclick="checkAnswer('cybersecurity', '${lesson.id}', ${qIdx},${oIdx})">
-                    ${String.fromCharCode(65 + oIdx)})${opt}
-                  </button>
-                `).join('')}
+                ${q.options.map((opt, oIdx) => {
+                  let btnClass = 'quiz-opt-btn';
+                  if (isAnswered) {
+                    if (oIdx === q.correct) btnClass += ' correct';
+                    else if (oIdx === savedAnswer) btnClass += ' wrong';
+                  }
+                  const disabledAttr = isAnswered ? 'disabled style="pointer-events:none;"' : '';
+                  return `
+                    <button class="${btnClass}" ${disabledAttr} onclick="checkAnswer('cybersecurity', '${lesson.id}', ${qIdx},${oIdx})">
+                      <span>${String.fromCharCode(65 + oIdx)}) ${opt}</span>${isAnswered && oIdx === q.correct ? '<span>✓</span>' : ''}
+                      ${isAnswered && oIdx === savedAnswer && oIdx !== q.correct ? '<span>✗</span>' : ''}
+                    </button>
+                  `;
+                }).join('')}
               </div>
-              <div class="ai-feedback-box" id="feedback-${lesson.id}-${qIdx}">
+              <div class="ai-feedback-box" style="display: ${isAnswered ? 'block' : 'none'};">
                 <div class="ai-feedback-title">🤖 AI Tutor Explanation</div>
                 <div class="ai-feedback-text">${q.explanation.replace(/\n/g, '<br>')}</div>
               </div>
@@ -861,39 +976,34 @@
       setTimeout(triggerKaTeX, 50);
     }
 
+    // CHECK QUIZ ANSWER LOGIC (REPAIRED & PERSISTENT)
     function checkAnswer(subjectKey, lessonId, qIdx, selectedOpt) {
       const lesson = DATABASE[subjectKey].find(l => l.id === lessonId);
       const question = lesson.questions[qIdx];
-      const quizBox = document.getElementById(`quiz-${lessonId}-${qIdx}`);
-      const feedbackBox = document.getElementById(`feedback-${lessonId}-${qIdx}`);
-      const buttons = quizBox.querySelectorAll('.quiz-opt-btn');
+      const qKey = `${lessonId}_${qIdx}`;
 
+      if (!DATABASE.user.answers) DATABASE.user.answers = {};
+      if (DATABASE.user.answers[qKey] !== undefined) return; // Prevent duplicate clicks
+
+      DATABASE.user.answers[qKey] = selectedOpt;
       DATABASE.user.totalQuestionsAnswered += 1;
 
       if (selectedOpt === question.correct) {
         DATABASE.user.correctQuestionsAnswered += 1;
-        buttons[selectedOpt].classList.add('correct');
-        buttons.forEach(btn => btn.style.pointerEvents = 'none');
-        
-        feedbackBox.style.display = 'none';
         addXP(25, `Верный ответ: ${lesson.title}`);
 
-        if (!DATABASE.user.completedLessons.includes(lessonId)) {
+        const allAnsweredCorrectly = lesson.questions.every((q, idx) => DATABASE.user.answers[`${lessonId}_${idx}`] === q.correct);
+        if (allAnsweredCorrectly && !DATABASE.user.completedLessons.includes(lessonId)) {
           DATABASE.user.completedLessons.push(lessonId);
-          logSystem(`Урок "${lesson.title}" пройден!`);
+          logSystem(`Урок "${lesson.title}" успешно пройден!`);
         }
       } else {
-        buttons[selectedOpt].classList.add('wrong');
-        buttons[question.correct].classList.add('correct');
-        buttons.forEach(btn => btn.style.pointerEvents = 'none');
-
-        feedbackBox.style.display = 'block';
         logSystem(`Ошибка в тесте. Показан разбор ИИ.`);
       }
 
       DATABASE.user.accuracy = Math.round((DATABASE.user.correctQuestionsAnswered / DATABASE.user.totalQuestionsAnswered) * 100);
       saveState();
-      
+
       if (subjectKey === 'math') renderMathLessons();
       if (subjectKey === 'cybersecurity') renderCyberLessons();
     }
